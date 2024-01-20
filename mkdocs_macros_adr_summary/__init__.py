@@ -1,5 +1,10 @@
-def some_function() -> str:
-    return "some_variable_to_test"
+from mkdocs_macros.plugin import MacrosPlugin
+
+from .plugin import adr_summary
+
+
+def define_env(env: MacrosPlugin) -> None:
+    env.macro(adr_summary)
 
 
 __version__ = "0.0.0"

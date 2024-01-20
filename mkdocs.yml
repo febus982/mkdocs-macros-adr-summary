@@ -10,6 +10,8 @@ repo_url: 'https://github.com/febus982/mkdocs-macros-adr-summary'
 plugins:
   - search
   - mike
+  - macros:
+        module_name: mkdocs_macros_adr_summary
 
 theme:
   name: material

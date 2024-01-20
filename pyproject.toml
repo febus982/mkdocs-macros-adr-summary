@@ -35,6 +35,8 @@ requires = ["poetry-core", "poetry-dynamic-versioning"]
 build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poetry.dependencies]
+mkdocs = "^1.4.3"
+mkdocs-macros-plugin = "^1.0.5"
 python = ">=3.8,<3.13"
 
 [tool.poetry.group.dev]
@@ -44,7 +46,6 @@ optional = true
 coverage = ">=6.5.0"
 bandit = ">=1.7.6"
 black = ">=22.10.0"
-mkdocs = ">=1.4.3"
 mkdocs-material = ">=9.1.16"
 mike = ">=2.0.0"
 mypy = ">=0.990"
@@ -66,6 +67,12 @@ testpaths = [
 
 [tool.mypy]
 files = "mkdocs_macros_adr_summary"
+
+[[tool.mypy.overrides]]
+module = [
+    "mkdocs_macros.plugin",
+]
+ignore_missing_imports = true
 
 [tool.coverage.run]
 branch = true
