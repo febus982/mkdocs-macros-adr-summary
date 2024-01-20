@@ -1,4 +1,4 @@
-from bootstrap_python_package import some_function
+from mkdocs_macros_adr_summary import some_function
 
 
 async def test_some_variable_to_test():

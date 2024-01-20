@@ -4,8 +4,8 @@ site_name: Bootstrap python package
 site_description: 'A manager to easily handle multiple SQLAlchemy configurations'
 site_author: 'Federico Busetti'
 docs_dir: docs/
-repo_name: 'febus982/bootstrap-python-package'
-repo_url: 'https://github.com/febus982/bootstrap-python-package'
+repo_name: 'febus982/mkdocs-macros-adr-summary'
+repo_url: 'https://github.com/febus982/mkdocs-macros-adr-summary'
 
 plugins:
   - search

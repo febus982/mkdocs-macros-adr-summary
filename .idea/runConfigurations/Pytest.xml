@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Pytest" type="tests" factoryName="py.test">
-    <module name="bootstrap-python-package" />
+    <module name="mkdocs-macros-adr-summary" />
     <option name="ENV_FILES" value="" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
