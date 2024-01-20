@@ -1,5 +1,25 @@
+import os
+from pathlib import Path
+
 from mkdocs_macros.plugin import MacrosPlugin
 
+from .factory import get_parser
+from .interfaces import ADRStyle
+from .renderer import Jinja2Renderer
 
-def adr_summary(env: MacrosPlugin):
-    return "Here we will render an amazing summary for our ADR directory"
+
+def adr_summary(
+    env: MacrosPlugin,
+    adr_path: str,
+    adr_style: ADRStyle = "nygard",
+) -> str:
+    absolute_path = Path(env.config.config_file_path).parent.joinpath(adr_path)
+    parser = get_parser(adr_style)
+
+    documents = [
+        parser.parse(absolute_path.joinpath(f))
+        for f in os.listdir(absolute_path)
+        if os.path.isfile(absolute_path.joinpath(f))
+    ]
+
+    return Jinja2Renderer.summary(documents=documents)

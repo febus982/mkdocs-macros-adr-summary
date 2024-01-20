@@ -34,7 +34,7 @@ update-dependencies:
 	poetry update --with dev
 
 fix:  format-fix lint-fix
-check: typing format lint test bandit
+check: typing format lint bandit test
 
 docs:
 	poetry run mkdocs serve
