@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import Optional
 
 from mkdocs_macros.plugin import MacrosPlugin
 
@@ -12,8 +13,10 @@ def adr_summary(
     env: MacrosPlugin,
     adr_path: str,
     adr_style: ADRStyle = "nygard",
+    template_path: Optional[str] = None,
 ) -> str:
-    absolute_path = Path(env.config.config_file_path).parent.joinpath(adr_path)
+    mkdocs_base_path = Path(env.config.config_file_path).parent
+    absolute_path = mkdocs_base_path.joinpath(adr_path)
     parser = get_parser(adr_style)
 
     documents = [
@@ -22,4 +25,8 @@ def adr_summary(
         if os.path.isfile(absolute_path.joinpath(f))
     ]
 
-    return Jinja2Renderer.summary(documents=documents)
+    return Jinja2Renderer.summary(
+        documents=documents,
+        mkdocs_base_path=mkdocs_base_path,
+        template_path=template_path,
+    )

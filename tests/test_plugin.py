@@ -27,5 +27,9 @@ def test_adr_summary():
     fake_parser.parse.assert_called_once_with(
         PosixPath("/some/path/to/docs/adr/somefile.md")
     )
-    mock_summary.assert_called_once_with(documents=["someprocessedfile.md"])
+    mock_summary.assert_called_once_with(
+        documents=["someprocessedfile.md"],
+        mkdocs_base_path=PosixPath("/some/path/to"),
+        template_path=None,
+    )
     assert summary == "TEST RETURN"
