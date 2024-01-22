@@ -1,62 +1,79 @@
 from datetime import date, datetime
 from pathlib import Path
-from typing import Optional, Union, Tuple
+from typing import List, Optional, Tuple
 
-from marko import parse
-from marko.block import Document, Heading, Paragraph
-from marko.inline import RawText
+from mistune import BlockState, Markdown, create_markdown
+from mistune.renderers.markdown import MarkdownRenderer
 
 from mkdocs_macros_adr_summary.interfaces import ADRDocument, ADRParser
 
+AST_TYPE = Tuple[List, BlockState]
+
 
 class NygardParser(ADRParser):
+    renderer = MarkdownRenderer()
+    parser: Markdown = create_markdown(
+        escape=False,
+        renderer=None,
+        plugins=["strikethrough", "footnotes", "table", "speedup"],
+    )
+
     @classmethod
     def parse(cls, file_path: Path) -> ADRDocument:
         with open(file_path, "r") as f:
-            md_file = parse(f.read())
+            md_ast = cls.parser.parse(f.read())
 
         doc = ADRDocument(
             filename=str(file_path),
-            title=cls._get_title(md_file) or "==INVALID_TITLE==",
-            date=cls._get_datetime(md_file),
-            statuses=cls._get_statuses(md_file) or ("==INVALID_STATUS==",),
+            title=cls._get_title(md_ast) or "==INVALID_TITLE==",
+            date=cls._get_datetime(md_ast),
+            statuses=cls._get_statuses(md_ast) or ("==INVALID_STATUS==",),
         )
         return doc
 
     @classmethod
-    def _get_title(cls, document: Document) -> Optional[str]:
+    def _get_title(cls, document: AST_TYPE) -> Optional[str]:
         try:
-            block = document.children[0]
-            if not isinstance(block, Heading) or block.level != 1:
-                raise ValueError("Invalid title block.")
-            return cls._get_raw_content(block)
-        except (IndexError, ValueError):
+            block = document[0][0]
+        except IndexError:
+            return None
+
+        if (
+            not block.get("type") == "heading"
+            or block.get("attrs", {}).get("level") != 1
+        ):
+            return None
+
+        return cls.renderer.paragraph(block, document[1]).strip()
+
+    @classmethod
+    def _get_datetime(cls, document: AST_TYPE) -> Optional[date]:
+        try:
+            block = document[0][2]
+        except IndexError:
+            return None
+
+        if not block.get("type") == "paragraph":
+            return None
+
+        raw_text = cls.renderer.paragraph(block, document[1]).strip()
+        try:
+            return datetime.strptime(raw_text, "Date: %Y-%m-%d").date()
+        except ValueError:
             return None
 
     @classmethod
-    def _get_datetime(cls, document: Document) -> Optional[date]:
+    def _get_statuses(cls, document: AST_TYPE) -> Optional[Tuple[str, ...]]:
+        statuses: List[str] = []
+
         try:
-            block = document.children[2]
-            if not isinstance(block, Paragraph):
-                raise ValueError("Invalid date block.")
-            raw_text = cls._get_raw_content(block)
-            return datetime.strptime(raw_text, "Date: %Y-%m-%d").date()  # type: ignore
-        except (IndexError, ValueError):
+            block = document[0][6]
+        except IndexError:
             return None
 
-    @classmethod
-    def _get_statuses(cls, document: Document) -> Optional[Tuple[str]]:
-        statuses = []
-        try:
-            block = document.children[6]
-            if not isinstance(block, Paragraph):
-                raise ValueError("Invalid status block.")
-            statuses.append(cls._get_raw_content(block))
-        except (IndexError, ValueError):
+        if not block.get("type") == "paragraph":
             return None
+
+        statuses.append(cls.renderer.paragraph(block, document[1]).strip())
 
         return tuple(statuses)
-
-    @classmethod
-    def _get_raw_content(cls, block: Union[Paragraph, Heading]) -> Optional[str]:
-        return [x.children for x in block.children if isinstance(x, RawText)][0]
