@@ -17,7 +17,7 @@ class ADRDocument:
     filename: str
     title: str
     date: Optional[date]
-    status: str
+    status: Optional[str]
 
 
 class ADRParser(ABC):
