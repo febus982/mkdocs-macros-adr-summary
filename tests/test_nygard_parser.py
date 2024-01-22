@@ -14,7 +14,7 @@ def test_parse_valid_document():
         filename=str(Path(__file__).parent.joinpath("adr_docs/nygard/valid.md")),
         title="1. Record architecture decisions",
         date=datetime.fromisoformat("2024-01-20").date(),
-        status="Accepted",
+        statuses=tuple(["Accepted"]),
     )
 
 
@@ -27,7 +27,7 @@ def test_parse_invalid_lines_delta():
         ),
         title="==INVALID_TITLE==",
         date=None,
-        status="==INVALID_STATUS==",
+        statuses=tuple(["==INVALID_STATUS=="]),
     )
 
 
@@ -42,7 +42,7 @@ def test_parse_invalid_title(filename: str):
         filename=str(Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")),
         title="==INVALID_TITLE==",
         date=datetime.fromisoformat("2024-01-20").date(),
-        status="Accepted",
+        statuses=tuple(["Accepted"]),
     )
 
 
@@ -57,7 +57,7 @@ def test_parse_invalid_date(filename: str):
         filename=str(Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")),
         title="1. Record architecture decisions",
         date=None,
-        status="Accepted",
+        statuses=tuple(["Accepted"]),
     )
 
 
@@ -72,5 +72,5 @@ def test_parse_invalid_status(filename: str):
         filename=str(Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")),
         title="1. Record architecture decisions",
         date=datetime.fromisoformat("2024-01-20").date(),
-        status="==INVALID_STATUS==",
+        statuses=tuple(["==INVALID_STATUS=="]),
     )

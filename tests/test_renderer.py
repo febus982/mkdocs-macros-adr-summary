@@ -47,7 +47,7 @@ def test_jinja_renderer_uses_default_template_if_no_template_path(
                     filename="something",
                     title="something",
                     date=datetime.now(),
-                    status="accepted",
+                    statuses=["accepted"],
                 )
             ],
             mkdocs_base_path=Path("/path/to/mkdocs"),

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import date
 from enum import Enum
 from pathlib import Path
-from typing import Literal, Optional
+from typing import Literal, Optional, Sequence
 
 ADRStyle = Literal["nygard"]
 
@@ -17,7 +17,7 @@ class ADRDocument:
     filename: str
     title: str
     date: Optional[date]
-    status: Optional[str]
+    statuses: Optional[Sequence[str]]
 
 
 class ADRParser(ABC):

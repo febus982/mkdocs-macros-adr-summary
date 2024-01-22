@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from pathlib import Path
-from typing import Optional, Union
+from typing import Optional, Union, Tuple
 
 from marko import parse
 from marko.block import Document, Heading, Paragraph
@@ -19,7 +19,7 @@ class NygardParser(ADRParser):
             filename=str(file_path),
             title=cls._get_title(md_file) or "==INVALID_TITLE==",
             date=cls._get_datetime(md_file),
-            status=cls._get_status(md_file) or "==INVALID_STATUS==",
+            statuses=cls._get_statuses(md_file) or ("==INVALID_STATUS==",),
         )
         return doc
 
@@ -45,14 +45,17 @@ class NygardParser(ADRParser):
             return None
 
     @classmethod
-    def _get_status(cls, document: Document) -> Optional[str]:
+    def _get_statuses(cls, document: Document) -> Optional[Tuple[str]]:
+        statuses = []
         try:
             block = document.children[6]
             if not isinstance(block, Paragraph):
                 raise ValueError("Invalid status block.")
-            return cls._get_raw_content(block)
+            statuses.append(cls._get_raw_content(block))
         except (IndexError, ValueError):
             return None
+
+        return tuple(statuses)
 
     @classmethod
     def _get_raw_content(cls, block: Union[Paragraph, Heading]) -> Optional[str]:

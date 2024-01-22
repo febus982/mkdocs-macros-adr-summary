@@ -4,7 +4,9 @@ Date: 2024-01-20
 
 ## Status
 
-Accepted
+Superceded by [2. Supersedes 1](0002-supersedes-1.md)
+
+Superceded by [3. Supersedes 1-b](0003-supersedes-1-b.md)
 
 ## Context
 
