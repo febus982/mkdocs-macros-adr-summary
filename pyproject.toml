@@ -47,6 +47,7 @@ optional = true
 coverage = ">=6.5.0"
 bandit = ">=1.7.6"
 black = ">=22.10.0"
+mkdocs-awesome-pages-plugin = "^2.9.2"
 mkdocs-material = ">=9.1.16"
 mike = ">=2.0.0"
 mypy = ">=0.990"
