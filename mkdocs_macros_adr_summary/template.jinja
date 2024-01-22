@@ -1,5 +1,11 @@
 ## Document list
 {% for d in documents %}
 * `{{ d.title }}`
-  * `{{ d.filename }}`
+    * `{{ d.filename }}`
+    {% if d.statuses %}
+    * Statuses:
+        {% for status in d.statuses %}
+        * `{{ status }}`
+        {% endfor %}
+    {% endif %}
 {% endfor %}
