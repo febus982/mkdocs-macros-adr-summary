@@ -1,9 +1,9 @@
 from typing import Dict, Type
 
 from .interfaces import ADRParser, ADRStyle
-from .parser import ADRNygardParser
+from .parser import NygardParser
 
-parser_registry: Dict[ADRStyle, Type[ADRParser]] = {"nygard": ADRNygardParser}
+parser_registry: Dict[ADRStyle, Type[ADRParser]] = {"nygard": NygardParser}
 
 
 def get_parser(adr_style: ADRStyle) -> Type[ADRParser]:

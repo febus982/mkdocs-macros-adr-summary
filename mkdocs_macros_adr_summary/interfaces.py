@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from datetime import date
 from enum import Enum
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Optional
 
 ADRStyle = Literal["nygard"]
 
@@ -14,6 +15,9 @@ class ADRFormat(Enum):
 @dataclass
 class ADRDocument:
     filename: str
+    title: str
+    date: Optional[date]
+    status: str
 
 
 class ADRParser(ABC):

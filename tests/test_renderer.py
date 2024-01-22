@@ -1,3 +1,4 @@
+from datetime import datetime
 from pathlib import Path, PosixPath
 from unittest.mock import Mock, patch
 
@@ -41,7 +42,14 @@ def test_jinja_renderer_uses_default_template_if_no_template_path(
         "mkdocs_macros_adr_summary.renderer.Environment", return_value=env
     ) as mock_env:
         Jinja2Renderer.summary(
-            documents=[ADRDocument(filename="something")],
+            documents=[
+                ADRDocument(
+                    filename="something",
+                    title="something",
+                    date=datetime.now(),
+                    status="accepted",
+                )
+            ],
             mkdocs_base_path=Path("/path/to/mkdocs"),
             template_path=template_path,
         )
