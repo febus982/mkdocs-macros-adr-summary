@@ -7,14 +7,30 @@ from mkdocs_macros_adr_summary.interfaces import ADRDocument
 from mkdocs_macros_adr_summary.parser import NygardParser
 
 
-def test_parse_valid_document():
+@pytest.mark.parametrize(
+    ["filename", "expected_statuses"],
+    [
+        ("valid.md", tuple(["Accepted"])),
+        (
+            "valid_multi_status.md",
+            tuple(
+                [
+                    "Accepted",
+                    "Supercedes [1. Record architecture decisions]"
+                    "(0001-record-architecture-decisions.md)",
+                ]
+            ),
+        ),
+    ],
+)
+def test_parse_valid_document(filename: str, expected_statuses: tuple):
     assert NygardParser.parse(
-        Path(__file__).parent.joinpath("adr_docs/nygard/valid.md")
+        Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")
     ) == ADRDocument(
-        filename=str(Path(__file__).parent.joinpath("adr_docs/nygard/valid.md")),
+        filename=str(Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")),
         title="1. Record architecture decisions",
         date=datetime.fromisoformat("2024-01-20").date(),
-        statuses=tuple(["Accepted"]),
+        statuses=expected_statuses,
     )
 
 

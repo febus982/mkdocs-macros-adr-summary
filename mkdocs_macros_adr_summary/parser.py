@@ -63,17 +63,21 @@ class NygardParser(ADRParser):
             return None
 
     @classmethod
-    def _get_statuses(cls, document: AST_TYPE) -> Optional[Tuple[str, ...]]:
+    def _get_statuses(cls, document: AST_TYPE) -> Tuple[str, ...]:
         statuses: List[str] = []
 
-        try:
-            block = document[0][6]
-        except IndexError:
-            return None
+        i = 6
+        while i < len(document[0]):
+            try:
+                block = document[0][i]
+            except IndexError:
+                break
 
-        if not block.get("type") == "paragraph":
-            return None
+            if block.get("type") == "paragraph":
+                statuses.append(cls.renderer.paragraph(block, document[1]).strip())
+            else:
+                break
 
-        statuses.append(cls.renderer.paragraph(block, document[1]).strip())
+            i += 2
 
         return tuple(statuses)
