@@ -6,7 +6,7 @@ from mkdocs_macros_adr_summary import adr_summary
 
 def test_adr_summary():
     mkdocs_env = Mock()
-    mkdocs_env.config.config_file_path = "/some/path/to/mkdocs.yml"
+    mkdocs_env.project_dir = "/some/path/to"
 
     fake_parser = Mock()
     fake_parser.parse.return_value = "someprocessedfile.md"

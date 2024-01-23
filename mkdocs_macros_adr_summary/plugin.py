@@ -18,8 +18,7 @@ def adr_summary(
     adr_style: ADRStyle = "nygard",
     template_path: Optional[str] = None,
 ) -> str:
-    mkdocs_base_path = Path(env.config.config_file_path).parent
-    absolute_path = mkdocs_base_path.joinpath(adr_path)
+    absolute_path = Path(env.project_dir).joinpath(adr_path)
     parser = get_parser(adr_style)
 
     documents = [
@@ -30,6 +29,6 @@ def adr_summary(
 
     return Jinja2Renderer.summary(
         documents=documents,
-        mkdocs_base_path=mkdocs_base_path,
+        mkdocs_base_path=Path(env.project_dir),
         template_path=template_path,
     )
