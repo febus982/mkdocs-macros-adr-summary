@@ -11,14 +11,14 @@ class Jinja2Renderer:
     def summary(
         documents: Iterable[ADRDocument],
         mkdocs_base_path: Path,
-        template_path: Optional[str] = None,
+        template_file: Optional[str] = None,
     ) -> str:
-        if template_path:
+        if template_file:
             template_env = Environment(
                 loader=FileSystemLoader(searchpath=mkdocs_base_path),
                 autoescape=True,
             )
-            template = template_env.get_template(template_path)
+            template = template_env.get_template(template_file)
         else:
             template_env = Environment(
                 loader=FileSystemLoader(searchpath=Path(__file__).parent),

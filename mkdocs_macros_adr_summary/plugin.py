@@ -16,7 +16,7 @@ def adr_summary(
     env: MacrosPlugin,
     adr_path: str,
     adr_style: ADRStyle = "nygard",
-    template_path: Optional[str] = None,
+    template_file: Optional[str] = None,
 ) -> str:
     absolute_path = Path(env.project_dir).joinpath(adr_path)
     parser = get_parser(adr_style)
@@ -30,5 +30,5 @@ def adr_summary(
     return Jinja2Renderer.summary(
         documents=documents,
         mkdocs_base_path=Path(env.project_dir),
-        template_path=template_path,
+        template_file=template_file,
     )

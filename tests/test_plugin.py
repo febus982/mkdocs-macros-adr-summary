@@ -38,6 +38,6 @@ def test_adr_summary():
     mock_summary.assert_called_once_with(
         documents=["someprocessedfile.md"],
         mkdocs_base_path=PosixPath("/some/path/to"),
-        template_path=None,
+        template_file=None,
     )
     assert summary == "TEST RETURN"

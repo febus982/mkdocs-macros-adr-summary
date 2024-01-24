@@ -10,24 +10,24 @@ from mkdocs_macros_adr_summary.renderer import Jinja2Renderer
 
 
 @pytest.mark.parametrize(
-    ["template_path", "expected_path", "expected_template"],
+    ["template_file", "expected_path", "expected_template"],
     [
         pytest.param(
             None,
             Path(__file__).parent.parent.joinpath("mkdocs_macros_adr_summary"),
             "template.jinja",
-            id="no_template_path",
+            id="no_template_file",
         ),
         pytest.param(
             "path/to/template/custom.jinja",
             Path("/path/to/mkdocs"),
             "path/to/template/custom.jinja",
-            id="custom_template_path",
+            id="custom_template_file",
         ),
     ],
 )
-def test_jinja_renderer_uses_default_template_if_no_template_path(
-    template_path: str, expected_path: PosixPath, expected_template: str
+def test_jinja_renderer_uses_default_template_if_no_template_file(
+    template_file: str, expected_path: PosixPath, expected_template: str
 ):
     loader = Mock(spec=FileSystemLoader)
     env = Mock(spec=Environment)
@@ -44,14 +44,14 @@ def test_jinja_renderer_uses_default_template_if_no_template_path(
         Jinja2Renderer.summary(
             documents=[
                 ADRDocument(
-                    filename="something",
+                    file_path="something",
                     title="something",
                     date=datetime.now(),
                     statuses=["accepted"],
                 )
             ],
             mkdocs_base_path=Path("/path/to/mkdocs"),
-            template_path=template_path,
+            template_file=template_file,
         )
 
     # Assert

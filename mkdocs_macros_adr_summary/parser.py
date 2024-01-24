@@ -25,7 +25,7 @@ class NygardParser(ADRParser):
             md_ast = cls.parser.parse(f.read())
 
         doc = ADRDocument(
-            filename=fix_url(str(file_path.relative_to(base_path))),
+            file_path=fix_url(str(file_path.relative_to(base_path))),
             title=cls._get_title(md_ast) or "==INVALID_TITLE==",
             date=cls._get_datetime(md_ast),
             statuses=cls._get_statuses(md_ast) or ("==INVALID_STATUS==",),

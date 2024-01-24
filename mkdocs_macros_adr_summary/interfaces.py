@@ -14,7 +14,7 @@ class ADRFormat(Enum):
 
 @dataclass
 class ADRDocument:
-    filename: str
+    file_path: str
     title: str
     date: Optional[date]
     statuses: Optional[Sequence[str]]
