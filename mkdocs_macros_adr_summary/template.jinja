@@ -1,7 +1,9 @@
 ## Document list
+
 {% for d in documents %}
-* [{{ d.title }}](#TODO)
+* [{{ d.title }}]({{ d.filename }})
     * `{{ d.date.strftime('%d-%m-%Y') }}`
+    * `{{ d.filename }}`
     {% if d.statuses %}
     * Statuses:
         {% for status in d.statuses %}

@@ -1,4 +1,4 @@
-# 3. Supersedes 1-b
+# 3. Supercedes 1-b
 
 Date: 2024-01-22
 

@@ -4,6 +4,7 @@ from typing import List, Optional, Tuple
 
 from mistune import BlockState, Markdown, create_markdown
 from mistune.renderers.markdown import MarkdownRenderer
+from mkdocs_macros import fix_url
 
 from mkdocs_macros_adr_summary.interfaces import ADRDocument, ADRParser
 
@@ -19,12 +20,12 @@ class NygardParser(ADRParser):
     )
 
     @classmethod
-    def parse(cls, file_path: Path) -> ADRDocument:
+    def parse(cls, file_path: Path, base_path: Path) -> ADRDocument:
         with open(file_path, "r") as f:
             md_ast = cls.parser.parse(f.read())
 
         doc = ADRDocument(
-            filename=str(file_path),
+            filename=fix_url(str(file_path.relative_to(base_path))),
             title=cls._get_title(md_ast) or "==INVALID_TITLE==",
             date=cls._get_datetime(md_ast),
             statuses=cls._get_statuses(md_ast) or ("==INVALID_STATUS==",),
@@ -33,10 +34,8 @@ class NygardParser(ADRParser):
 
     @classmethod
     def _get_title(cls, document: AST_TYPE) -> Optional[str]:
-        try:
-            block = document[0][0]
-        except IndexError:
-            return None
+        # There can be no document without at least the first line
+        block = document[0][0]
 
         if (
             not block.get("type") == "heading"

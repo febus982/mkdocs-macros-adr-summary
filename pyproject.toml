@@ -72,7 +72,7 @@ files = "mkdocs_macros_adr_summary"
 
 [[tool.mypy.overrides]]
 module = [
-    "mkdocs_macros.plugin",
+    "mkdocs_macros.*",
 ]
 ignore_missing_imports = true
 

@@ -25,9 +25,10 @@ from mkdocs_macros_adr_summary.parser import NygardParser
 )
 def test_parse_valid_document(filename: str, expected_statuses: tuple):
     assert NygardParser.parse(
-        Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")
+        Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}"),
+        base_path=Path(__file__).parent,
     ) == ADRDocument(
-        filename=str(Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")),
+        filename=f"../adr_docs/nygard/{filename}",
         title="1. Record architecture decisions",
         date=datetime.fromisoformat("2024-01-20").date(),
         statuses=expected_statuses,
@@ -36,11 +37,22 @@ def test_parse_valid_document(filename: str, expected_statuses: tuple):
 
 def test_parse_invalid_lines_delta():
     assert NygardParser.parse(
-        Path(__file__).parent.joinpath("adr_docs/nygard/invalid_lines_delta.md")
+        Path(__file__).parent.joinpath("adr_docs/nygard/invalid_lines_delta.md"),
+        base_path=Path(__file__).parent,
     ) == ADRDocument(
-        filename=str(
-            Path(__file__).parent.joinpath("adr_docs/nygard/invalid_lines_delta.md")
-        ),
+        filename="../adr_docs/nygard/invalid_lines_delta.md",
+        title="==INVALID_TITLE==",
+        date=None,
+        statuses=tuple(["==INVALID_STATUS=="]),
+    )
+
+
+def test_parse_invalid_blank_document():
+    assert NygardParser.parse(
+        Path(__file__).parent.joinpath("adr_docs/nygard/invalid_blank_document.md"),
+        base_path=Path(__file__).parent,
+    ) == ADRDocument(
+        filename="../adr_docs/nygard/invalid_blank_document.md",
         title="==INVALID_TITLE==",
         date=None,
         statuses=tuple(["==INVALID_STATUS=="]),
@@ -53,9 +65,10 @@ def test_parse_invalid_lines_delta():
 )
 def test_parse_invalid_title(filename: str):
     assert NygardParser.parse(
-        Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")
+        Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}"),
+        base_path=Path(__file__).parent,
     ) == ADRDocument(
-        filename=str(Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")),
+        filename=f"../adr_docs/nygard/{filename}",
         title="==INVALID_TITLE==",
         date=datetime.fromisoformat("2024-01-20").date(),
         statuses=tuple(["Accepted"]),
@@ -68,9 +81,10 @@ def test_parse_invalid_title(filename: str):
 )
 def test_parse_invalid_date(filename: str):
     assert NygardParser.parse(
-        Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")
+        Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}"),
+        base_path=Path(__file__).parent,
     ) == ADRDocument(
-        filename=str(Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")),
+        filename=f"../adr_docs/nygard/{filename}",
         title="1. Record architecture decisions",
         date=None,
         statuses=tuple(["Accepted"]),
@@ -83,9 +97,10 @@ def test_parse_invalid_date(filename: str):
 )
 def test_parse_invalid_status(filename: str):
     assert NygardParser.parse(
-        Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")
+        Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}"),
+        base_path=Path(__file__).parent,
     ) == ADRDocument(
-        filename=str(Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}")),
+        filename=f"../adr_docs/nygard/{filename}",
         title="1. Record architecture decisions",
         date=datetime.fromisoformat("2024-01-20").date(),
         statuses=tuple(["==INVALID_STATUS=="]),

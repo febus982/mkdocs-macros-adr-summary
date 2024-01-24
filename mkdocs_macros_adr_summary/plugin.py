@@ -22,7 +22,7 @@ def adr_summary(
     parser = get_parser(adr_style)
 
     documents = [
-        parser.parse(absolute_path.joinpath(f))
+        parser.parse(absolute_path.joinpath(f), env.conf["docs_dir"])
         for f in os.listdir(absolute_path)
         if os.path.isfile(absolute_path.joinpath(f)) and ADR_REGEX.match(f)
     ]
