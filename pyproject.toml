@@ -1,17 +1,25 @@
 [tool.poetry]
 name = "mkdocs-macros-adr-summary"
 version = "0.0.0"
-description = "A manager to easily handle multiple SQLAlchemy configurations"
+description = "A plugin to generate a summary of a ADR directory"
 license = "MIT"
 authors = ["Federico Busetti <729029+febus982@users.noreply.github.com>"]
 repository = "https://github.com/febus982/mkdocs-macros-adr-summary"
 homepage = "https://febus982.github.io/mkdocs-macros-adr-summary"
 readme = "README.md"
 packages = [{include = "mkdocs_macros_adr_summary"}]
-#keywords = ["add", "keywords", "here"]
+keywords = [
+    "adr",
+    "architecture-decision-records",
+    "mkdocs",
+    "mkdocs-plugin",
+    "mkdocs-macro",
+    "mkdocs-macro-plugin",
+    "nygard",
+]
 classifiers = [
     "Development Status :: 4 - Beta",
-    "Framework :: AsyncIO",
+    "Framework :: MkDocs",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
@@ -24,7 +32,12 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Typing :: Typed"
+    "Topic :: Documentation",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
 ]
 
 [tool.poetry-dynamic-versioning]
@@ -35,6 +48,9 @@ requires = ["poetry-core", "poetry-dynamic-versioning"]
 build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poetry.dependencies]
+mistune = "^3.0.2"
+mkdocs = "^1.4.3"
+mkdocs-macros-plugin = "^1.0.5"
 python = ">=3.8,<3.13"
 
 [tool.poetry.group.dev]
@@ -44,7 +60,7 @@ optional = true
 coverage = ">=6.5.0"
 bandit = ">=1.7.6"
 black = ">=22.10.0"
-mkdocs = ">=1.4.3"
+mkdocs-awesome-pages-plugin = "^2.9.2"
 mkdocs-material = ">=9.1.16"
 mike = ">=2.0.0"
 mypy = ">=0.990"
@@ -66,6 +82,12 @@ testpaths = [
 
 [tool.mypy]
 files = "mkdocs_macros_adr_summary"
+
+[[tool.mypy.overrides]]
+module = [
+    "mkdocs_macros.*",
+]
+ignore_missing_imports = true
 
 [tool.coverage.run]
 branch = true

@@ -1,0 +1,13 @@
+## Document list
+
+{% for d in documents %}
+* [{{ d.title }}]({{ d.filename }})
+    * `{{ d.date.strftime('%d-%m-%Y') }}`
+    * `{{ d.file_path }}`
+    {% if d.statuses %}
+    * Statuses:
+        {% for status in d.statuses %}
+        * {{ status }}
+        {% endfor %}
+    {% endif %}
+{% endfor %}

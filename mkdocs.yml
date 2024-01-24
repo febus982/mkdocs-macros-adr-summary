@@ -9,7 +9,10 @@ repo_url: 'https://github.com/febus982/mkdocs-macros-adr-summary'
 
 plugins:
   - search
+  - awesome-pages
   - mike
+  - macros:
+        module_name: mkdocs_macros_adr_summary
 
 theme:
   name: material
@@ -44,8 +47,11 @@ extra:
     provider: mike
     default: stable
 
-nav:
-  - Home: index.md
+# Do not use the nav section in this file but reference to the .pages files
+# in the docs/ directory and subdirectories (awesome-pages plugin)
+# https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin
+#nav:
+#  - Home: index.md
 
 markdown_extensions:
   - pymdownx.details
