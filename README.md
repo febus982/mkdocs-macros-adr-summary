@@ -1,7 +1,7 @@
 # mkdocs-macros-adr-summary
 ![Static Badge](https://img.shields.io/badge/Python-3.8_%7C_3.9_%7C_3.10_%7C_3.11_%7C_3.12-blue?logo=python&logoColor=white)
 [![Stable Version](https://img.shields.io/pypi/v/mkdocs-macros-adr-summary?color=blue)](https://pypi.org/project/mkdocs-macros-adr-summary/)
-[![stability-wip](https://img.shields.io/badge/stability-wip-lightgrey.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#work-in-progress)
+[![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#beta)
 
 [![Python tests](https://github.com/febus982/mkdocs-macros-adr-summary/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/febus982/mkdocs-macros-adr-summary/actions/workflows/python-tests.yml)
 [![Bandit checks](https://github.com/febus982/mkdocs-macros-adr-summary/actions/workflows/python-bandit.yml/badge.svg?branch=main)](https://github.com/febus982/mkdocs-macros-adr-summary/actions/workflows/python-bandit.yml)
