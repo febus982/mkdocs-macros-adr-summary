@@ -13,6 +13,76 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v1.json)](https://github.com/charliermarsh/ruff)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 
+This is a macro plugin to generates summaries from a list of a ADR documents in a directory.
+
+Examples and documentation can be found [here](https://febus982.github.io/mkdocs-macros-adr-summary)
+
+## Quick start
+
+Enable the plugin in `mkdocs.yml`
+
+```yaml
+plugins:
+  - macros:
+        module_name: mkdocs_macros_adr_summary
+```
+
+Create a markdown page in your mkdocs website and use the `adr_summary` macro providing
+the path containing your ADR files relative to the `mkdocs.yml` file.
+
+```markdown
+# Summary
+
+{{ adr_summary(adr_path="docs/adr") }}
+```
+
+## More customization
+
+The page output is generated using a jinja template, but you can provide a custom one. The file path
+must still be relative to the `mkdocs.yml` file.
+
+```markdown
+# Summary
+
+{{ adr_summary(adr_path="docs/adr", template_file="other.jinja") }}
+```
+
+The default template is:
+
+```markdown
+## Document list
+
+{% for d in documents %}
+* [{{ d.title }}]({{ d.filename }})
+    * `{{ d.date.strftime('%d-%m-%Y') }}`
+    * `{{ d.file_path }}`
+    {% if d.statuses %}
+    * Statuses:
+        {% for status in d.statuses %}
+        * {{ status }}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+```
+
+The `document` variable in the jinja template is a Sequence of:
+
+```python
+@dataclass
+class ADRDocument:
+    file_path: str
+    title: str
+    date: Optional[date]
+    statuses: Optional[Sequence[str]]
+```
+
+## Supported ADR formats
+
+The only supported ADR format currently is the `nygard` format, it is recommended to
+use [adr-tools](https://github.com/npryce/adr-tools) to manage the directory.
+
+Support for [MADR](https://adr.github.io/madr/) versions 2 and 3 will be added with future iterations.
+
 ## Commands for development
 
 All the common commands used during development can be run using make targets:
