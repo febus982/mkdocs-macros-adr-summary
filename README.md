@@ -65,16 +65,44 @@ The default template is:
 {% endfor %}
 ```
 
-The `document` variable in the jinja template is a Sequence of:
+The `documents` variable in the jinja template is a Sequence of `ADRDocument` models:
 
 ```python
 @dataclass
 class ADRDocument:
     file_path: str
-    title: str
-    date: Optional[date]
-    statuses: Optional[Sequence[str]]
+    title: Optional[str] = None
+    date: Optional[date] = None
+    stasdetus: Optional[str] = None
+    statuses: Sequence[str] = tuple()
+    deciders: Optional[str] = None
+    consulted: Optional[str] = None
+    informed: Optional[str] = None
 ```
+
+There are some differences in what metadata is available when using different formats:
+
+|           | Nygard | MADR3 | MADR2 |
+|-----------|--------|-------|-------|
+| file_path | ✅︎     | ✅︎    | ✅︎    |
+| title     | ✅︎     | ✅︎    | ✅︎    |
+| date      | ✅︎     | ✅︎    | TODO  |
+| status    | ⚠      | ✅︎    | TODO  |
+| statuses  | ✅︎     | ⚠     | TODO  |
+| deciders  | ❌      | ✅︎    | TODO  |
+| consulted | ❌      | ✅︎    | TODO  |
+| informed  | ❌      | ✅︎    | TODO  |
+
+* **Nygard format**
+  * `status` is the last item `statuses`. (I don't believe we should use multiple
+    statuses, however `adr-tools` allows it)
+  * `deciders`, `consulted` and `informed` are not supported by the format
+* **MADR3**
+  * I wasn't able to find an automated tool supporting superseding documents.
+    By looking at the template it looks like there's a single status.
+    `statuses` will return a list with a single status.
+
+------------
 
 ## Supported ADR formats
 

@@ -1,3 +1,4 @@
 nav:
   - Home: index.md
   - ADR Example (Nygard format): adr_nygard_example
+  - ADR Example (MADR3 format): adr_madr3_example

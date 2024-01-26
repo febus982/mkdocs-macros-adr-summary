@@ -2,7 +2,7 @@
 
 {% for d in documents %}
 * [{{ d.title }}]({{ d.filename }})
-    * `{{ d.date.strftime('%d-%m-%Y') }}`
+    * `{{ d.date.strftime('%d-%m-%Y') if d.date }}`
     * `{{ d.file_path }}`
     {% if d.statuses %}
     * Statuses:

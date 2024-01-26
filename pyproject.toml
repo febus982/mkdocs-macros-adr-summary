@@ -52,6 +52,7 @@ mistune = "^3.0.2"
 mkdocs = "^1.4.3"
 mkdocs-macros-plugin = "^1.0.5"
 python = ">=3.8,<3.13"
+pyyaml = "^6.0.1"
 
 [tool.poetry.group.dev]
 optional = true
@@ -71,6 +72,7 @@ pytest-cov = ">=4.0.0"
 pytest-factoryboy = ">=2.5.0"
 pytest-xdist = ">=3.0.2"
 ruff = ">=0.0.263"
+types-pyyaml = "^6.0.12.12"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
