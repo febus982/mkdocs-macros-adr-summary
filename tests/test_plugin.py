@@ -28,7 +28,7 @@ def test_adr_summary():
     ) as mock_listdir, patch(
         "os.path.isfile", return_value=True
     ):
-        summary = adr_summary(env=mkdocs_env, adr_path="docs/adr")
+        summary = adr_summary(env=mkdocs_env, adr_path="docs/adr", adr_style="nygard")
 
     mock_listdir.assert_called_once_with(PosixPath("/some/path/to/docs/adr"))
     fake_parser.parse.assert_called_once_with(

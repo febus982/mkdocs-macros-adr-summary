@@ -1,5 +1,5 @@
 
-# 1. Record architecture decisions (NOT H1)
+# 1. Record architecture decisions
 
 Date: 2024-01-20
 

@@ -18,6 +18,10 @@ This is a macro plugin to generates summaries from a list of a ADR documents in 
 
 Examples and documentation can be found [here](https://febus982.github.io/mkdocs-macros-adr-summary)
 
+The package should be stable enough for daily use. I'll release 1.0.0, and switch to semantic version,
+as soon as support for MADR version 2 has been implemented. Until that breaking changes can be introduced
+and will be documented in the GitHub release description.
+
 ## Quick start
 
 Enable the plugin in `mkdocs.yml`
@@ -33,9 +37,11 @@ the path containing your ADR files relative to the `mkdocs.yml` file.
 
 ```
 {% raw %}
-{{ adr_summary(adr_path="docs/adr") }}
+{{ adr_summary(adr_path="docs/adr", adr_style="nygard") }}
 {% endraw %}
 ```
+
+`adr_style` can be `nygard` or `MADR3`
 
 ## More customization
 
@@ -44,7 +50,7 @@ must still be relative to the `mkdocs.yml` file.
 
 ```
 {% raw %}
-{{ adr_summary(adr_path="docs/adr", template_file="other.jinja") }}
+{{ adr_summary(adr_path="docs/adr", adr_style="MADR3", template_file="other.jinja") }}
 {% endraw %}
 ```
 
@@ -68,23 +74,50 @@ The default template is:
 {% endraw %}
 ```
 
-The `document` variable in the jinja template is a Sequence of:
+The `documents` variable in the jinja template is a Sequence of `ADRDocument` models:
 
 ```python
 @dataclass
 class ADRDocument:
     file_path: str
-    title: str
-    date: Optional[date]
-    statuses: Optional[Sequence[str]]
+    title: Optional[str] = None
+    date: Optional[date] = None
+    stasdetus: Optional[str] = None
+    statuses: Sequence[str] = tuple()
+    deciders: Optional[str] = None
+    consulted: Optional[str] = None
+    informed: Optional[str] = None
 ```
+
+There are some differences in what metadata is available when using different formats:
+
+|           | Nygard | MADR3 | MADR2 |
+|-----------|--------|-------|-------|
+| file_path | ✅︎     | ✅︎    | ✅︎    |
+| title     | ✅︎     | ✅︎    | ✅︎    |
+| date      | ✅︎     | ✅︎    | TODO  |
+| status    | ⚠      | ✅︎    | TODO  |
+| statuses  | ✅︎     | ⚠     | TODO  |
+| deciders  | ❌      | ✅︎    | TODO  |
+| consulted | ❌      | ✅︎    | TODO  |
+| informed  | ❌      | ✅︎    | TODO  |
+
+* **Nygard format**
+  * `status` is the last item `statuses`. (I don't believe we should use multiple
+    statuses, however `adr-tools` allows it)
+  * `deciders`, `consulted` and `informed` are not supported by the format
+* **MADR3**
+  * I wasn't able to find an automated tool supporting superseding documents.
+    By looking at the template it looks like there's a single status.
+    `statuses` will return a list with a single status.
 
 ## Supported ADR formats
 
-The only supported ADR format currently is the `nygard` format, it is recommended to
-use [adr-tools](https://github.com/npryce/adr-tools) to manage the directory.
+The supported ADR formats are:
+* `nygard` format, it is recommended to use [adr-tools](https://github.com/npryce/adr-tools) to manage the directory
+* `MADR` [version 3](https://github.com/adr/madr/blob/3.0.0/template/adr-template.md)
 
-Support for [MADR](https://adr.github.io/madr/) versions 2 and 3 will be added with future iterations.
+Support for [MADR](https://adr.github.io/madr/) version 2 will be added in a future version.
 
 ## Commands for development
 
