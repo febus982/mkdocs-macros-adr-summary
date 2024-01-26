@@ -17,6 +17,10 @@ This is a macro plugin to generates summaries from a list of a ADR documents in 
 
 Examples and documentation can be found [here](https://febus982.github.io/mkdocs-macros-adr-summary)
 
+The package should be stable enough for daily use. I'll release 1.0.0, and switch to semantic version,
+as soon as support for MADR version 2 has been implemented. Until that breaking changes can be introduced
+and will be documented in the GitHub release description.
+
 ## Quick start
 
 Enable the plugin in `mkdocs.yml`
@@ -31,10 +35,10 @@ Create a markdown page in your mkdocs website and use the `adr_summary` macro pr
 the path containing your ADR files relative to the `mkdocs.yml` file.
 
 ```markdown
-# Summary
-
-{{ adr_summary(adr_path="docs/adr") }}
+{{ adr_summary(adr_path="docs/adr", adr_style="nygard") }}
 ```
+
+`adr_style` can be `nygard` or `MADR3`
 
 ## More customization
 
@@ -42,9 +46,7 @@ The page output is generated using a jinja template, but you can provide a custo
 must still be relative to the `mkdocs.yml` file.
 
 ```markdown
-# Summary
-
-{{ adr_summary(adr_path="docs/adr", template_file="other.jinja") }}
+{{ adr_summary(adr_path="docs/adr", adr_style="MADR3", template_file="other.jinja") }}
 ```
 
 The default template is:
@@ -102,14 +104,13 @@ There are some differences in what metadata is available when using different fo
     By looking at the template it looks like there's a single status.
     `statuses` will return a list with a single status.
 
-------------
-
 ## Supported ADR formats
 
-The only supported ADR format currently is the `nygard` format, it is recommended to
-use [adr-tools](https://github.com/npryce/adr-tools) to manage the directory.
+The supported ADR formats are:
+* `nygard` format, it is recommended to use [adr-tools](https://github.com/npryce/adr-tools) to manage the directory
+* `MADR` [version 3](https://github.com/adr/madr/blob/3.0.0/template/adr-template.md)
 
-Support for [MADR](https://adr.github.io/madr/) versions 2 and 3 will be added with future iterations.
+Support for [MADR](https://adr.github.io/madr/) version 2 will be added in a future version.
 
 ## Commands for development
 
