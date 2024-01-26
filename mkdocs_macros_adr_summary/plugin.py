@@ -15,7 +15,7 @@ ADR_REGEX = re.compile("^[0-9]{4}-[\\w-]+\\.md*")
 def adr_summary(
     env: MacrosPlugin,
     adr_path: str,
-    adr_style: TYPE_ADRStyle = "nygard",
+    adr_style: TYPE_ADRStyle,
     template_file: Optional[str] = None,
 ) -> str:
     absolute_path = Path(env.project_dir).joinpath(adr_path)
