@@ -22,5 +22,4 @@ class ADRDocument:
 class ADRParser(ABC):
     @staticmethod
     @abstractmethod
-    def parse(file_path: Path, base_path: Path) -> ADRDocument:
-        ...
+    def parse(file_path: Path, base_path: Path) -> ADRDocument: ...
