@@ -15,10 +15,10 @@ jobs:
       contents: read
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -32,7 +32,7 @@ jobs:
           poetry build
 
       - name: Archive the dist folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist
@@ -41,10 +41,10 @@ jobs:
       - name: Export version for site docs
         id: docs-version-step
         run: |
-          ./ci-scripts/docs-version.sh
-          echo "Identified version: $(./ci-scripts/docs-version.sh)"
-          echo "version=$(./ci-scripts/docs-version.sh)"
-          echo "version=$(./ci-scripts/docs-version.sh)" >> $GITHUB_OUTPUT
+          ./scripts/docs-version.sh
+          echo "Identified version: $(./scripts/docs-version.sh)"
+          echo "version=$(./scripts/docs-version.sh)"
+          echo "version=$(./scripts/docs-version.sh)" >> $GITHUB_OUTPUT
 
   publish:
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - name: Download the dist folder from the build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
@@ -72,8 +72,8 @@ jobs:
         # REMOVE CUSTOM REPOSITORY TO  #
         # PUBLISH ON OFFICIAL PYPI     #
         ################################
-#        with:
-#          repository-url: https://test.pypi.org/legacy/
+        with:
+          repository-url: https://test.pypi.org/legacy/
 
   site:
     needs: build
