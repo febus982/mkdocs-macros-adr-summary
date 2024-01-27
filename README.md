@@ -28,7 +28,8 @@ Enable the plugin in `mkdocs.yml`
 ```yaml
 plugins:
   - macros:
-        module_name: mkdocs_macros_adr_summary
+      modules:
+        - mkdocs_macros_adr_summary
 ```
 
 Create a markdown page in your mkdocs website and use the `adr_summary` macro providing
@@ -46,24 +47,15 @@ The page output is generated using a jinja template, but you can provide a custo
 must still be relative to the `mkdocs.yml` file.
 
 ```markdown
-{{ adr_summary(adr_path="docs/adr", adr_style="MADR3", template_file="other.jinja") }}
+{{ adr_summary(adr_path="docs/adr", adr_style="MADR3",m) }}
 ```
 
 The default template is:
 
 ```markdown
-## Document list
-
-{% for d in documents %}
-* [{{ d.title }}]({{ d.filename }})
-    * `{{ d.date.strftime('%d-%m-%Y') }}`
-    * `{{ d.file_path }}`
-    {% if d.statuses %}
-    * Statuses:
-        {% for status in d.statuses %}
-        * {{ status }}
-        {% endfor %}
-    {% endif %}
+| Date | Decision | Status |
+|------|----------|--------|
+{% for d in documents %}| {{ d.date.strftime('%d-%m-%Y') }} | [{{ d.title }}]({{ d.filename }}) | {{ d.status }}  |
 {% endfor %}
 ```
 

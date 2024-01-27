@@ -29,7 +29,8 @@ Enable the plugin in `mkdocs.yml`
 ```yaml
 plugins:
   - macros:
-        module_name: mkdocs_macros_adr_summary
+      modules:
+        - mkdocs_macros_adr_summary
 ```
 
 Create a markdown page in your mkdocs website and use the `adr_summary` macro providing
@@ -58,18 +59,9 @@ The default template is:
 
 ```
 {% raw %}
-## Document list
-
-{% for d in documents %}
-* [{{ d.title }}]({{ d.filename }})
-    * `{{ d.date.strftime('%d-%m-%Y') }}`
-    * `{{ d.file_path }}`
-    {% if d.statuses %}
-    * Statuses:
-        {% for status in d.statuses %}
-        * {{ status }}
-        {% endfor %}
-    {% endif %}
+| Date | Decision | Status |
+|------|----------|--------|
+{% for d in documents %}| {{ d.date.strftime('%d-%m-%Y') }} | [{{ d.title }}]({{ d.filename }}) | {{ d.status }}  |
 {% endfor %}
 {% endraw %}
 ```
