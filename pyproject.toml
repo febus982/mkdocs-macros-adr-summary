@@ -94,8 +94,8 @@ ignore_missing_imports = true
 [tool.coverage.run]
 branch = true
 source = ["mkdocs_macros_adr_summary"]
-concurrency = ["multiprocessing"]
-parallel = true
+# It's not necessary to configure concurrency here
+# because pytest-cov takes care of that
 
 [tool.coverage.report]
 exclude_also = [
