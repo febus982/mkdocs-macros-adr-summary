@@ -47,24 +47,21 @@ def test_parse_valid_document(
     )
 
 
-def test_parse_invalid_blank_document():
-    with pytest.raises(InvalidFileError):
-        MADR2Parser.parse(
-            Path(__file__).parent.joinpath("adr_docs/madr2/invalid_blank_document.md"),
-            base_path=Path(__file__).parent,
-        )
-
-
 @pytest.mark.parametrize(
     ["filename"],
-    [("invalid_title_h3.md",), ("invalid_title_p.md",)],
+    [
+        ("invalid_title_h3.md",),
+        ("invalid_title_p.md",),
+        ("invalid_no_content.md",),
+        ("invalid_blank_document.md",),
+    ],
 )
-def test_parse_invalid_title(filename: str, adr_document_factory):
-    document = MADR2Parser.parse(
-        Path(__file__).parent.joinpath(f"adr_docs/madr2/{filename}"),
-        base_path=Path(__file__).parent,
-    )
-    assert document.title == adr_document_factory().title
+def test_parse_invalid_documents(filename: str, adr_document_factory):
+    with pytest.raises(InvalidFileError):
+        MADR2Parser.parse(
+            Path(__file__).parent.joinpath(f"adr_docs/madr2/{filename}"),
+            base_path=Path(__file__).parent,
+        )
 
 
 def test_invalid_headers_are_ignored():

@@ -17,7 +17,6 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
-import logging
 from datetime import date, datetime
 from typing import Any, Dict, Optional, Sequence, Tuple
 
@@ -39,11 +38,10 @@ class MADR2Parser(BaseParser):
         title_index = cls._get_title_index(ast)
         content_index = cls._get_first_h2_index(ast)
         if title_index is None or content_index is None:
-            logging.warning(
+            raise LookupError(
                 "Malformed document: Could not find"
                 " headings surrounding metadata section"
             )
-            return None
 
         try:
             metadata_list = [
