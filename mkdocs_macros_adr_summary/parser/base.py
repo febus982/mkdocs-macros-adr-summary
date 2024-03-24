@@ -65,16 +65,36 @@ class BaseParser(ADRParser, ABC):
 
     @classmethod
     def _get_title(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
-        h1_list = [
+        title_index = cls._get_title_index(ast)
+        if title_index is None:
+            return None
+        return cls.renderer.paragraph(ast[0][title_index], ast[1]).strip()
+
+    @classmethod
+    def _get_title_index(cls, ast: TYPE_AST) -> Optional[int]:
+        h1_file_lines = [
             i
             for i, x in enumerate(ast[0])
             if x.get("type") == "heading" and x.get("attrs", {}).get("level") == 1
         ]
-        if len(h1_list) != 1:
+        if len(h1_file_lines) != 1:
             logging.warning("Malformed content: Could not find the title heading.")
             return None
 
-        return cls.renderer.paragraph(ast[0][h1_list[0]], ast[1]).strip()
+        return h1_file_lines[0]
+
+    @classmethod
+    def _get_first_h2_index(cls, ast: TYPE_AST) -> Optional[int]:
+        h2_file_lines = [
+            i
+            for i, x in enumerate(ast[0])
+            if x.get("type") == "heading" and x.get("attrs", {}).get("level") == 2
+        ]
+        if len(h2_file_lines) < 1:
+            logging.warning("Malformed content: Could not find the title heading.")
+            return None
+
+        return h2_file_lines[0]
 
     @classmethod
     @abstractmethod

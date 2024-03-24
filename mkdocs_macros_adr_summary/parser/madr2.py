@@ -21,7 +21,7 @@ import logging
 from datetime import date, datetime
 from typing import Any, Dict, Optional, Sequence, Tuple
 
-from .base import BaseParser
+from .madr3 import BaseParser
 from .types import TYPE_AST
 
 
@@ -37,25 +37,14 @@ class MADR2Parser(BaseParser):
     @classmethod
     def _get_metadata_from_ast(cls, ast: TYPE_AST) -> Dict[str, str]:
         metadata: Dict[str, str] = {}
-        h1_index_list = [
-            i
-            for i, x in enumerate(ast[0])
-            if x.get("type") == "heading" and x.get("attrs", {}).get("level") == 1
-        ]
-        h2_index_list = [
-            i
-            for i, x in enumerate(ast[0])
-            if x.get("type") == "heading" and x.get("attrs", {}).get("level") == 2
-        ]
-        if len(h1_index_list) != 1 or len(h2_index_list) < 1:
+        title_index = cls._get_title_index(ast)
+        content_index = cls._get_first_h2_index(ast)
+        if title_index is None or content_index is None:
             logging.warning(
                 "Malformed document: Could not find"
                 " headings surrounding metadata section"
             )
             return metadata
-
-        title_index = h1_index_list[0]
-        content_index = h2_index_list[0]
 
         try:
             metadata_list = [

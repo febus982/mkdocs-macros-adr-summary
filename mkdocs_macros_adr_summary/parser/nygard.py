@@ -33,16 +33,12 @@ class NygardParser(BaseParser):
 
     @classmethod
     def _get_date(cls, metadata: dict, ast: TYPE_AST) -> Optional[date]:
-        h1_list = [
-            i
-            for i, x in enumerate(ast[0])
-            if x.get("type") == "heading" and x.get("attrs", {}).get("level") == 1
-        ]
-        if len(h1_list) != 1:
+        title_index = cls._get_title_index(ast)
+        if title_index is None:
             return None
 
         try:
-            block = ast[0][h1_list[0] + 2]
+            block = ast[0][title_index + 2]
         except IndexError:
             return None
 
