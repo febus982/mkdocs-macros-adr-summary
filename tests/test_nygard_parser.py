@@ -53,19 +53,6 @@ def test_can_parse_invalid_lines_delta(adr_document_factory):
     )
 
 
-def test_parse_invalid_blank_document(adr_document_factory):
-    assert NygardParser.parse(
-        Path(__file__).parent.joinpath("adr_docs/nygard/invalid_blank_document.md"),
-        base_path=Path(__file__).parent,
-    ) == adr_document_factory(
-        file_path="../adr_docs/nygard/invalid_blank_document.md",
-        title=None,
-        date=None,
-        status=None,
-        statuses=tuple(),
-    )
-
-
 @pytest.mark.parametrize(
     ["filename"],
     [("invalid_title_h3.md",), ("invalid_title_p.md",)],

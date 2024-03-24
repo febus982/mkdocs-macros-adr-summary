@@ -32,50 +32,50 @@ class NygardParser(BaseParser):
         return {}, md_ast
 
     @classmethod
-    def _get_date(cls, metadata: dict, document: TYPE_AST) -> Optional[date]:
+    def _get_date(cls, metadata: dict, ast: TYPE_AST) -> Optional[date]:
         h1_list = [
             i
-            for i, x in enumerate(document[0])
+            for i, x in enumerate(ast[0])
             if x.get("type") == "heading" and x.get("attrs", {}).get("level") == 1
         ]
         if len(h1_list) != 1:
             return None
 
         try:
-            block = document[0][h1_list[0] + 2]
+            block = ast[0][h1_list[0] + 2]
         except IndexError:
             return None
 
         if not block.get("type") == "paragraph":
             return None
 
-        raw_text = cls.renderer.paragraph(block, document[1]).strip()
+        raw_text = cls.renderer.paragraph(block, ast[1]).strip()
         try:
             return datetime.strptime(raw_text, "Date: %Y-%m-%d").date()
         except ValueError:
             return None
 
     @classmethod
-    def _get_statuses(cls, metadata: dict, document: TYPE_AST) -> Sequence[str]:
+    def _get_statuses(cls, metadata: dict, ast: TYPE_AST) -> Sequence[str]:
         statuses: List[str] = []
 
         # Find status header
         h2_list = [
             i
-            for i, x in enumerate(document[0])
+            for i, x in enumerate(ast[0])
             if x.get("type") == "heading"
-            and x.get("attrs", {}).get("level") == 2
-            and cls.renderer.paragraph(x, document[1]).strip() == "Status"
+               and x.get("attrs", {}).get("level") == 2
+               and cls.renderer.paragraph(x, ast[1]).strip() == "Status"
         ]
         if len(h2_list) != 1:
             return tuple(statuses)
 
         i = h2_list[0] + 1
-        while i < len(document[0]):
-            block = document[0][i]
+        while i < len(ast[0]):
+            block = ast[0][i]
 
             if block.get("type") == "paragraph":
-                statuses.append(cls.renderer.paragraph(block, document[1]).strip())
+                statuses.append(cls.renderer.paragraph(block, ast[1]).strip())
                 i += 1
             elif block.get("type") == "heading":
                 break
@@ -91,13 +91,5 @@ class NygardParser(BaseParser):
         return statuses[-1] if statuses else None
 
     @classmethod
-    def _get_deciders(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
-        return None
-
-    @classmethod
-    def _get_consulted(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
-        return None
-
-    @classmethod
-    def _get_informed(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
+    def _get_id(cls, metadata: dict, ast: TYPE_AST) -> Optional[int]:
         return None

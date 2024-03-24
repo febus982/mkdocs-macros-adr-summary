@@ -17,7 +17,7 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
-
+import logging
 from abc import ABC, abstractmethod
 from datetime import date
 from pathlib import Path
@@ -52,6 +52,7 @@ class BaseParser(ADRParser, ABC):
 
         doc = ADRDocument(
             file_path=fix_url(str(file_path.relative_to(base_path))),
+            document_id=cls._get_id(metadata, ast),
             title=cls._get_title(metadata, ast),
             date=cls._get_date(metadata, ast),
             status=cls._get_status(metadata, ast),
@@ -60,7 +61,6 @@ class BaseParser(ADRParser, ABC):
             consulted=cls._get_consulted(metadata, ast),
             informed=cls._get_informed(metadata, ast),
         )
-
         return doc
 
     @classmethod
@@ -71,6 +71,7 @@ class BaseParser(ADRParser, ABC):
             if x.get("type") == "heading" and x.get("attrs", {}).get("level") == 1
         ]
         if len(h1_list) != 1:
+            logging.warning("Malformed content: Could not find the title heading.")
             return None
 
         return cls.renderer.paragraph(ast[0][h1_list[0]], ast[1]).strip()
@@ -93,15 +94,19 @@ class BaseParser(ADRParser, ABC):
 
     @classmethod
     @abstractmethod
-    def _get_deciders(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]: ...
+    def _get_id(cls, metadata: dict, ast: TYPE_AST) -> Optional[int]: ...
 
     @classmethod
-    @abstractmethod
-    def _get_consulted(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]: ...
+    def _get_deciders(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
+        return None
 
     @classmethod
-    @abstractmethod
-    def _get_informed(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]: ...
+    def _get_consulted(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
+        return None
+
+    @classmethod
+    def _get_informed(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
+        return None
 
     @staticmethod
     def _upperfirst(text: str) -> str:

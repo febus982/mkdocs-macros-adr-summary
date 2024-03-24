@@ -30,6 +30,7 @@ TYPE_ADRStyle = Literal["MADR2", "MADR3", "nygard"]
 @dataclass
 class ADRDocument:
     file_path: str
+    document_id: Optional[int] = None
     title: Optional[str] = None
     date: Optional[date] = None
     status: Optional[str] = None

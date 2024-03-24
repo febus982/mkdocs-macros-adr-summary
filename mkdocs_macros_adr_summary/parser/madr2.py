@@ -17,40 +17,66 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
-
-from datetime import date
-from typing import Any, Dict, Optional, Sequence, Tuple
-
-from yaml import safe_load
-from yaml.scanner import ScannerError
+import logging
+from datetime import date, datetime
+from typing import Any, Dict, Optional, Sequence, Tuple, List
 
 from .base import BaseParser
 from .types import TYPE_AST
 
 
-class MADR3Parser(BaseParser):
+class MADR2Parser(BaseParser):
     @classmethod
     def _get_metadata_and_ast(cls, file: str) -> Tuple[Dict[str, Any], TYPE_AST]:
-        lines = file.splitlines()
-        separators = [i for i, x in enumerate(lines) if x == "---"]
-        if len(separators) < 2:
-            raise LookupError("Metadata section not found in file")
+        if file == "":
+            raise LookupError("Cannot parse an empty file")
+        md_ast = cls.parser.parse(file)
 
-        yaml_file = lines[0 : separators[1] :]
+        return cls._get_metadata_from_ast(md_ast), md_ast
+
+    @classmethod
+    def _get_metadata_from_ast(cls, ast: TYPE_AST) -> Dict[str, Any]:
+        metadata = {}
+        h1_index_list = [
+            i
+            for i, x in enumerate(ast[0])
+            if x.get("type") == "heading" and x.get("attrs", {}).get("level") == 1
+        ]
+        h2_index_list = [
+            i
+            for i, x in enumerate(ast[0])
+            if x.get("type") == "heading" and x.get("attrs", {}).get("level") == 2
+        ]
+        if len(h1_index_list) != 1 or len(h2_index_list) < 1:
+            logging.warning("Malformed document: Could not find headings surrounding metadata section")
+            return metadata
+
+        title_index = h1_index_list[0]
+        content_index = h2_index_list[0]
+
         try:
-            metadata: Optional[Dict[str, str]] = safe_load("\n".join(yaml_file))
-        except ScannerError:
-            raise LookupError("Cannot parse metadata section")
+            metadata_list = [x for x in ast[0][title_index:content_index] if x.get("type") == "list"][0]
+        except IndexError:
+            # No metadata in the document
+            return metadata
 
-        md_file = lines[separators[1] + 1 : :]
-        md_ast = cls.parser.parse("\n".join(md_file))
+        rendered_list = cls.renderer.list(metadata_list, ast[1])
 
-        return metadata or {}, md_ast
+        for item in rendered_list.split("\n"):
+            if item.startswith("* Status: "):
+                metadata["status"] = item[len("* Status: "):]
+            if item.startswith("* Deciders: "):
+                metadata["deciders"] = item[len("* Deciders: "):]
+            if item.startswith("* Date: "):
+                metadata["date"] = item[len("* Date: "):]
+
+        logging.error(metadata)
+        return metadata
 
     @classmethod
     def _get_date(cls, metadata: dict, ast: TYPE_AST) -> Optional[date]:
-        if isinstance(metadata.get("date"), date):
-            return metadata["date"]
+        if metadata.get("date"):
+            return datetime.strptime(metadata.get("date"), "%Y-%m-%d").date()
         else:
             return None
 
@@ -71,14 +97,6 @@ class MADR3Parser(BaseParser):
     @classmethod
     def _get_deciders(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
         return metadata.get("deciders")
-
-    @classmethod
-    def _get_consulted(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
-        return metadata.get("consulted")
-
-    @classmethod
-    def _get_informed(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
-        return metadata.get("informed")
 
     @classmethod
     def _get_id(cls, metadata: dict, ast: TYPE_AST) -> Optional[int]:

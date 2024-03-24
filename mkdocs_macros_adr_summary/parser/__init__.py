@@ -27,5 +27,6 @@
 #  Software is furnished to do so, subject to the following conditions:
 #
 #
+from .madr2 import MADR2Parser
 from .madr3 import MADR3Parser
 from .nygard import NygardParser
