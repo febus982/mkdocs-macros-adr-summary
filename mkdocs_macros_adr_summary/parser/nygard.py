@@ -64,8 +64,8 @@ class NygardParser(BaseParser):
             i
             for i, x in enumerate(ast[0])
             if x.get("type") == "heading"
-               and x.get("attrs", {}).get("level") == 2
-               and cls.renderer.paragraph(x, ast[1]).strip() == "Status"
+            and x.get("attrs", {}).get("level") == 2
+            and cls.renderer.paragraph(x, ast[1]).strip() == "Status"
         ]
         if len(h2_list) != 1:
             return tuple(statuses)

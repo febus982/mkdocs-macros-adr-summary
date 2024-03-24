@@ -19,7 +19,7 @@
 #  DEALINGS IN THE SOFTWARE.
 import logging
 from datetime import date, datetime
-from typing import Any, Dict, Optional, Sequence, Tuple, List
+from typing import Any, Dict, Optional, Sequence, Tuple
 
 from .base import BaseParser
 from .types import TYPE_AST
@@ -35,8 +35,8 @@ class MADR2Parser(BaseParser):
         return cls._get_metadata_from_ast(md_ast), md_ast
 
     @classmethod
-    def _get_metadata_from_ast(cls, ast: TYPE_AST) -> Dict[str, Any]:
-        metadata = {}
+    def _get_metadata_from_ast(cls, ast: TYPE_AST) -> Dict[str, str]:
+        metadata: Dict[str, str] = {}
         h1_index_list = [
             i
             for i, x in enumerate(ast[0])
@@ -48,14 +48,19 @@ class MADR2Parser(BaseParser):
             if x.get("type") == "heading" and x.get("attrs", {}).get("level") == 2
         ]
         if len(h1_index_list) != 1 or len(h2_index_list) < 1:
-            logging.warning("Malformed document: Could not find headings surrounding metadata section")
+            logging.warning(
+                "Malformed document: Could not find"
+                " headings surrounding metadata section"
+            )
             return metadata
 
         title_index = h1_index_list[0]
         content_index = h2_index_list[0]
 
         try:
-            metadata_list = [x for x in ast[0][title_index:content_index] if x.get("type") == "list"][0]
+            metadata_list = [
+                x for x in ast[0][title_index:content_index] if x.get("type") == "list"
+            ][0]
         except IndexError:
             # No metadata in the document
             return metadata
@@ -64,11 +69,11 @@ class MADR2Parser(BaseParser):
 
         for item in rendered_list.split("\n"):
             if item.startswith("* Status: "):
-                metadata["status"] = item[len("* Status: "):]
+                metadata["status"] = item[len("* Status: ") :]
             if item.startswith("* Deciders: "):
-                metadata["deciders"] = item[len("* Deciders: "):]
+                metadata["deciders"] = item[len("* Deciders: ") :]
             if item.startswith("* Date: "):
-                metadata["date"] = item[len("* Date: "):]
+                metadata["date"] = item[len("* Date: ") :]
 
         logging.error(metadata)
         return metadata
@@ -76,7 +81,7 @@ class MADR2Parser(BaseParser):
     @classmethod
     def _get_date(cls, metadata: dict, ast: TYPE_AST) -> Optional[date]:
         if metadata.get("date"):
-            return datetime.strptime(metadata.get("date"), "%Y-%m-%d").date()
+            return datetime.strptime(metadata["date"], "%Y-%m-%d").date()
         else:
             return None
 
