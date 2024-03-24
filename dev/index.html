@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.15">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.7e359304.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
@@ -378,10 +378,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
           
@@ -508,10 +506,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
           
@@ -523,7 +519,7 @@
             
   
   <span class="md-ellipsis">
-    ADR Example (MADR3 format)
+    ADR Example (MADR2 format)
   </span>
   
 
@@ -532,6 +528,113 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            ADR Example (MADR2 format)
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="adr_madr2_example/summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="adr_madr2_example/0001-record-architecture-decisions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Use Markdown Any Decision Records
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="adr_madr2_example/0002-changed-idea/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Changed idea about MADR2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ADR Example (MADR3 format)
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             ADR Example (MADR3 format)
           </label>
@@ -575,7 +678,7 @@
     
   
   
-    <span class="md-status md-status--accepted"></span>
+    <span class="md-status md-status--superseded by [ADR-0002](0002-change-idea.md)"></span>
   
 
   
@@ -593,12 +696,19 @@
   
   
     <li class="md-nav__item">
-      <a href="adr_madr3_example/adr-template/" class="md-nav__link">
+      <a href="adr_madr3_example/0002-change-idea/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Adr template
+    Changed idea about ADR format
   </span>
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
   
 
       </a>
@@ -729,9 +839,9 @@ must still be relative to the <code>mkdocs.yml</code> file.</p>
 <div class="highlight"><pre><span></span><code>{{ adr_summary(adr_path=&quot;docs/adr&quot;, adr_style=&quot;MADR3&quot;, template_file=&quot;other.jinja&quot;) }}
 </code></pre></div>
 <p>The default template is:</p>
-<div class="highlight"><pre><span></span><code>| Date | Decision | Status |
-|------|----------|--------|
-{% for d in documents %}| {{ d.date.strftime(&#39;%d-%m-%Y&#39;) }} | [{{ d.title }}]({{ d.filename }}) | {{ d.status }}  |
+<div class="highlight"><pre><span></span><code>| ID | Date | Decision | Status |
+|----|------|----------|--------|
+{% for d in documents %}| {{ d.document_id }} | {{ d.date.strftime(&#39;%d-%m-%Y&#39;) if d.date else &quot;-&quot;}} | [{{ d.title }}]({{ d.file_path }}) | {{ d.status }}  |
 {% endfor %}
 </code></pre></div>
 <p>The <code>documents</code> variable in the jinja template is a Sequence of <code>ADRDocument</code> models:</p>
@@ -740,7 +850,7 @@ must still be relative to the <code>mkdocs.yml</code> file.</p>
     <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">stasdetus</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">statuses</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
     <span class="n">deciders</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">consulted</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -773,49 +883,53 @@ must still be relative to the <code>mkdocs.yml</code> file.</p>
 <td>date</td>
 <td>✅︎</td>
 <td>✅︎</td>
-<td>TODO</td>
+<td>✅︎</td>
 </tr>
 <tr>
 <td>status</td>
 <td>⚠</td>
 <td>✅︎</td>
-<td>TODO</td>
+<td>✅︎</td>
 </tr>
 <tr>
 <td>statuses</td>
 <td>✅︎</td>
 <td>⚠</td>
-<td>TODO</td>
+<td>⚠</td>
 </tr>
 <tr>
 <td>deciders</td>
 <td>❌</td>
 <td>✅︎</td>
-<td>TODO</td>
+<td>✅︎</td>
 </tr>
 <tr>
 <td>consulted</td>
 <td>❌</td>
 <td>✅︎</td>
-<td>TODO</td>
+<td>❌</td>
 </tr>
 <tr>
 <td>informed</td>
 <td>❌</td>
 <td>✅︎</td>
-<td>TODO</td>
+<td>❌</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>Nygard format</strong></li>
+<li><strong>Nygard format</strong><ul>
 <li><code>status</code> is the last item <code>statuses</code>. (I don't believe we should use multiple
-    statuses, however <code>adr-tools</code> allows it)</li>
+  statuses, however <code>adr-tools</code> allows it)</li>
 <li><code>deciders</code>, <code>consulted</code> and <code>informed</code> are not supported by the format</li>
-<li><strong>MADR3</strong></li>
+</ul>
+</li>
+<li><strong>MADR2</strong> and <strong>MADR3</strong><ul>
 <li>I wasn't able to find an automated tool supporting superseding documents.
-    By looking at the template it looks like there's a single status.
-    <code>statuses</code> will return a list with a single status.</li>
+  By looking at the template it looks like there's a single status.
+  <code>statuses</code> will return a list with a single status.</li>
+</ul>
+</li>
 </ul>
 <h2 id="supported-adr-formats">Supported ADR formats</h2>
 <p>The supported ADR formats are:
@@ -902,7 +1016,7 @@ must still be relative to the <code>mkdocs.yml</code> file.</p>
     <script id="__config" type="application/json">{"base": ".", "features": ["navigation.expand", "navigation.top", "content.code.copy"], "search": "assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.e1c3ead8.min.js"></script>
+      <script src="assets/javascripts/bundle.bd41221c.min.js"></script>
       
     
   </body>
