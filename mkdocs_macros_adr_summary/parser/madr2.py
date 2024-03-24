@@ -35,8 +35,7 @@ class MADR2Parser(BaseParser):
         return cls._get_metadata_from_ast(md_ast), md_ast
 
     @classmethod
-    def _get_metadata_from_ast(cls, ast: TYPE_AST) -> Dict[str, str]:
-        metadata: Dict[str, str] = {}
+    def _extract_metadata_as_md_string(cls, ast: TYPE_AST) -> Optional[str]:
         title_index = cls._get_title_index(ast)
         content_index = cls._get_first_h2_index(ast)
         if title_index is None or content_index is None:
@@ -44,7 +43,7 @@ class MADR2Parser(BaseParser):
                 "Malformed document: Could not find"
                 " headings surrounding metadata section"
             )
-            return metadata
+            return None
 
         try:
             metadata_list = [
@@ -52,11 +51,19 @@ class MADR2Parser(BaseParser):
             ][0]
         except IndexError:
             # No metadata in the document
+            return None
+
+        return cls.renderer.list(metadata_list, ast[1])
+
+    @classmethod
+    def _get_metadata_from_ast(cls, ast: TYPE_AST) -> Dict[str, str]:
+        metadata: Dict[str, str] = {}
+        rendered_metadata = cls._extract_metadata_as_md_string(ast)
+
+        if rendered_metadata is None:
             return metadata
 
-        rendered_list = cls.renderer.list(metadata_list, ast[1])
-
-        for item in rendered_list.split("\n"):
+        for item in rendered_metadata.split("\n"):
             if item.startswith("* Status: "):
                 metadata["status"] = item[len("* Status: ") :]
             if item.startswith("* Deciders: "):
@@ -64,7 +71,6 @@ class MADR2Parser(BaseParser):
             if item.startswith("* Date: "):
                 metadata["date"] = item[len("* Date: ") :]
 
-        logging.error(metadata)
         return metadata
 
     @classmethod
