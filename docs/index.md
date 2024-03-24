@@ -61,7 +61,7 @@ The default template is:
 {% raw %}
 | ID | Date | Decision | Status |
 |----|------|----------|--------|
-{% for d in documents %}| {{ d.document_id }} | {{ d.date.strftime('%d-%m-%Y') if d.date else "-"}} | [{{ d.title }}]({{ d.filename }}) | {{ d.status }}  |
+{% for d in documents %}| {{ d.document_id }} | {{ d.date.strftime('%d-%m-%Y') if d.date else "-"}} | [{{ d.title }}]({{ d.file_path }}) | {{ d.status }}  |
 {% endfor %}
 {% endraw %}
 ```

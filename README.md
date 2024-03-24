@@ -53,9 +53,9 @@ must still be relative to the `mkdocs.yml` file.
 The default template is:
 
 ```markdown
-| Date | Decision | Status |
-|------|----------|--------|
-{% for d in documents %}| {{ d.date.strftime('%d-%m-%Y') }} | [{{ d.title }}]({{ d.filename }}) | {{ d.status }}  |
+| ID | Date | Decision | Status |
+|----|------|----------|--------|
+{% for d in documents %}| {{ d.document_id }} | {{ d.date.strftime('%d-%m-%Y') if d.date else "-"}} | [{{ d.title }}]({{ d.file_path }}) | {{ d.status }}  |
 {% endfor %}
 ```
 
