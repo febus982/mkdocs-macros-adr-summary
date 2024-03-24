@@ -53,9 +53,9 @@ must still be relative to the `mkdocs.yml` file.
 The default template is:
 
 ```markdown
-| Date | Decision | Status |
-|------|----------|--------|
-{% for d in documents %}| {{ d.date.strftime('%d-%m-%Y') }} | [{{ d.title }}]({{ d.filename }}) | {{ d.status }}  |
+| ID | Date | Decision | Status |
+|----|------|----------|--------|
+{% for d in documents %}| {{ d.document_id }} | {{ d.date.strftime('%d-%m-%Y') if d.date else "-"}} | [{{ d.title }}]({{ d.file_path }}) | {{ d.status }}  |
 {% endfor %}
 ```
 
@@ -67,7 +67,7 @@ class ADRDocument:
     file_path: str
     title: Optional[str] = None
     date: Optional[date] = None
-    stasdetus: Optional[str] = None
+    status: Optional[str] = None
     statuses: Sequence[str] = tuple()
     deciders: Optional[str] = None
     consulted: Optional[str] = None
@@ -80,21 +80,21 @@ There are some differences in what metadata is available when using different fo
 |-----------|--------|-------|-------|
 | file_path | ✅︎     | ✅︎    | ✅︎    |
 | title     | ✅︎     | ✅︎    | ✅︎    |
-| date      | ✅︎     | ✅︎    | TODO  |
-| status    | ⚠      | ✅︎    | TODO  |
-| statuses  | ✅︎     | ⚠     | TODO  |
-| deciders  | ❌      | ✅︎    | TODO  |
-| consulted | ❌      | ✅︎    | TODO  |
-| informed  | ❌      | ✅︎    | TODO  |
+| date      | ✅︎     | ✅︎    | ✅︎    |
+| status    | ⚠      | ✅︎    | ✅︎    |
+| statuses  | ✅︎     | ⚠     | ⚠     |
+| deciders  | ❌      | ✅︎    | ✅︎    |
+| consulted | ❌      | ✅︎    | ❌     |
+| informed  | ❌      | ✅︎    | ❌     |
 
 * **Nygard format**
-  * `status` is the last item `statuses`. (I don't believe we should use multiple
-    statuses, however `adr-tools` allows it)
-  * `deciders`, `consulted` and `informed` are not supported by the format
-* **MADR3**
-  * I wasn't able to find an automated tool supporting superseding documents.
-    By looking at the template it looks like there's a single status.
-    `statuses` will return a list with a single status.
+    * `status` is the last item `statuses`. (I don't believe we should use multiple
+      statuses, however `adr-tools` allows it)
+    * `deciders`, `consulted` and `informed` are not supported by the format
+* **MADR2** and **MADR3**
+    * I wasn't able to find an automated tool supporting superseding documents.
+      By looking at the template it looks like there's a single status.
+      `statuses` will return a list with a single status.
 
 ## Supported ADR formats
 

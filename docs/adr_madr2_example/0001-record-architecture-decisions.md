@@ -1,5 +1,9 @@
 # Use Markdown Any Decision Records
 
+* Status: superseded by [ADR-0002](0002-changed-idea.md)
+* Deciders: list everyone involved in the decision
+* Date: 2024-01-24
+
 ## Context and Problem Statement
 
 We want to record any decisions made in this project independent whether decisions concern the architecture ("architectural decision record"), the code, or other fields.

@@ -21,11 +21,12 @@
 from typing import Dict, Type
 
 from .interfaces import ADRParser, TYPE_ADRStyle
-from .parser import MADR3Parser, NygardParser
+from .parser import MADR2Parser, MADR3Parser, NygardParser
 
 parser_registry: Dict[TYPE_ADRStyle, Type[ADRParser]] = {
     "nygard": NygardParser,
     "MADR3": MADR3Parser,
+    "MADR2": MADR2Parser,
 }
 
 
