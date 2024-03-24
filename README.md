@@ -67,7 +67,7 @@ class ADRDocument:
     file_path: str
     title: Optional[str] = None
     date: Optional[date] = None
-    stasdetus: Optional[str] = None
+    status: Optional[str] = None
     statuses: Sequence[str] = tuple()
     deciders: Optional[str] = None
     consulted: Optional[str] = None
