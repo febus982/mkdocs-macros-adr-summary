@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#macro-rendering-error" class="md-skip">
+        <a href="#adr-summary" class="md-skip">
           Skip to content
         </a>
       
@@ -696,33 +696,31 @@
   
 
 
-<h1 id="macro-rendering-error"><em>Macro Rendering Error</em></h1>
-<p><em>File</em>: <code>adr_madr2_example/summary.md</code></p>
-<p><em>ValueError</em>: Format MADR2 not supported</p>
-<div class="highlight"><pre><span></span><code>Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.12.3/x64/lib/python3.12/site-packages/mkdocs_macros_adr_summary/factory.py&quot;, line 14, in get_parser
-    parser = parser_registry[adr_style]
-             ~~~~~~~~~~~~~~~^^^^^^^^^^^
-KeyError: &#39;MADR2&#39;
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.12.3/x64/lib/python3.12/site-packages/mkdocs_macros/plugin.py&quot;, line 527, in render
-    return md_template.render(**page_variables)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &quot;/opt/hostedtoolcache/Python/3.12.3/x64/lib/python3.12/site-packages/jinja2/environment.py&quot;, line 1301, in render
-    self.environment.handle_exception()
-  File &quot;/opt/hostedtoolcache/Python/3.12.3/x64/lib/python3.12/site-packages/jinja2/environment.py&quot;, line 936, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File &quot;&lt;template&gt;&quot;, line 3, in top-level template code
-  File &quot;/opt/hostedtoolcache/Python/3.12.3/x64/lib/python3.12/site-packages/mkdocs_macros_adr_summary/plugin.py&quot;, line 22, in adr_summary
-    parser = get_parser(adr_style)
-             ^^^^^^^^^^^^^^^^^^^^^
-  File &quot;/opt/hostedtoolcache/Python/3.12.3/x64/lib/python3.12/site-packages/mkdocs_macros_adr_summary/factory.py&quot;, line 16, in get_parser
-    raise ValueError(f&quot;Format {adr_style} not supported&quot;)
-ValueError: Format MADR2 not supported
-</code></pre></div>
+<h1 id="adr-summary">ADR Summary</h1>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Date</th>
+<th>Decision</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>None</td>
+<td>24-01-2024</td>
+<td><a href="../0002-changed-mind/">Changed my mind about MADR2</a></td>
+<td>Accepted</td>
+</tr>
+<tr>
+<td>None</td>
+<td>24-01-2024</td>
+<td><a href="../0001-record-architecture-decisions/">Use Markdown Any Decision Records</a></td>
+<td>Superseded by <a href="../0002-changed-mind/">ADR-0002</a></td>
+</tr>
+</tbody>
+</table>
 
 
 
