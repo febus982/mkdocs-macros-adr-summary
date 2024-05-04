@@ -5,7 +5,7 @@ status: accepted
 date: 2024-01-25
 deciders: Nick Fury, Tony Stark
 ---
-# Changed idea about ADR format
+# Changed my mind about ADR format
 
 ## Context and Problem Statement
 
