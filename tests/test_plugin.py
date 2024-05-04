@@ -22,12 +22,10 @@ def test_adr_summary():
         return_value=[
             "somefile.md",
             "0001-somevalidfile.md",
-            "0001-someoth\erfile.md",
+            r"0001-someoth\erfile.md",
             "0001-someoth/erfile.md",
         ],
-    ) as mock_listdir, patch(
-        "os.path.isfile", return_value=True
-    ):
+    ) as mock_listdir, patch("os.path.isfile", return_value=True):
         summary = adr_summary(env=mkdocs_env, adr_path="docs/adr", adr_style="nygard")
 
     mock_listdir.assert_called_once_with(PosixPath("/some/path/to/docs/adr"))
