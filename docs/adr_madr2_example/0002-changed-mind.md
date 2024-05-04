@@ -1,4 +1,4 @@
-# Changed idea about MADR2
+# Changed my mind about MADR2
 
 * Status: accepted
 * Deciders: Nick Fury, Tony Stark

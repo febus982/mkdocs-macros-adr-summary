@@ -44,10 +44,10 @@ class MADR2Parser(BaseParser):
             )
 
         try:
-            metadata_list = [
+            metadata_list = next(
                 x for x in ast[0][title_index:content_index] if x.get("type") == "list"
-            ][0]
-        except IndexError:
+            )
+        except StopIteration:
             # No metadata in the document
             return None
 

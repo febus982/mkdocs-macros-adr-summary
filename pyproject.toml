@@ -58,29 +58,36 @@ pyyaml = "^6.0.1"
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-coverage = "^7.4.1"
-bandit = "^1.7.6"
-black = ">=22.10.0"
-mkdocs-awesome-pages-plugin = ">=2.9.2"
-mkdocs-material = ">=9.1.16"
-mike = ">=2.0.0"
-mypy = ">=0.990"
-pymdown-extensions = ">=10.0.1"
-pytest = "^7.2.0"
-pytest-asyncio = "^0.23.3"
-pytest-cov = "^4.0.0"
-pytest-factoryboy = "^2.5.0"
-pytest-xdist = "^3.5.0"
-ruff = ">=0.1.14"
+coverage = "*"
+mkdocs-awesome-pages-plugin = "*"
+mkdocs-material = "*"
+mike = "*"
+mypy = "*"
+pymdown-extensions = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-factoryboy = "*"
+pytest-xdist = "*"
+ruff = "*"
 types-pyyaml = "^6.0.12.12"
 
-[tool.pytest.ini_options]
-asyncio_mode = "auto"
-minversion = "6.0"
-addopts = "-n auto --cov-report=term-missing"
-testpaths = [
-    "tests",
-]
+############################
+### Tools configuration  ###
+############################
+
+[tool.coverage.run]
+branch = true
+source = ["mkdocs_macros_adr_summary"]
+# It's not necessary to configure concurrency here
+# because pytest-cov takes care of that
+
+[tool.coverage.report]
+fail_under = 100
+exclude_also = [
+    "pragma: no cover",
+    "pass",
+    "\\.\\.\\.",
+    ]
 
 [tool.mypy]
 files = "mkdocs_macros_adr_summary"
@@ -91,31 +98,47 @@ module = [
 ]
 ignore_missing_imports = true
 
-[tool.coverage.run]
-branch = true
-source = ["mkdocs_macros_adr_summary"]
-# It's not necessary to configure concurrency here
-# because pytest-cov takes care of that
-
-[tool.coverage.report]
-exclude_also = [
-    "pragma: no cover",
-    "pass",
-    "\\.\\.\\.",
-    ]
-
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+minversion = "6.0"
+addopts = "-n auto --cov-report=term-missing"
+testpaths = [
+    "tests",
+]
 
 [tool.ruff]
-select = ["E", "F", "I"]
-extend-exclude = ["docs"]
+extend-exclude = ["docs", ".tox"]
+target-version = "py38"
 
-[tool.ruff.per-file-ignores]
-"__init__.py" = ["F401"]
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle
+    "W",  # pycodestyle
+    "F",  # pyflakes
+    "I",  # isort
+    "N",  # pep8-naming
+    "S",  # flake8-bandit
+    "RUF",  # ruff-specific-rules
+]
+# Ignoring rules problematic with formatter
+# https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
+ignore = [
+    "W191",
+    "E111",
+    "E114",
+    "E117",
+    "D206",
+    "D300",
+    "Q000",
+    "Q001",
+    "Q002",
+    "Q003",
+    "COM812",
+    "COM819",
+    "ISC001",
+    "ISC002",
+]
 
-[tool.black]
-target-version = ["py38", "py39", "py310", "py311", "py312"]
-extend-exclude = '''
-(
-  /docs
-)
-'''
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # Ignore unused imports on init files
+"tests/**/*.py" = ["S101"]  # Allow assert usage on tests
