@@ -1,6 +1,6 @@
 # Use Markdown Any Decision Records
 
-* Status: superseded by [ADR-0002](0002-changed-mind)
+* Status: superseded by [ADR-0002](0002-changed-mind.md)
 * Deciders: list everyone involved in the decision
 * Date: 2024-01-24
 
