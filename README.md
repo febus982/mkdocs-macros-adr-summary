@@ -4,7 +4,6 @@
 [![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#beta)
 
 [![Python tests](https://github.com/febus982/mkdocs-macros-adr-summary/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/febus982/mkdocs-macros-adr-summary/actions/workflows/python-tests.yml)
-[![Bandit checks](https://github.com/febus982/mkdocs-macros-adr-summary/actions/workflows/python-bandit.yml/badge.svg?branch=main)](https://github.com/febus982/mkdocs-macros-adr-summary/actions/workflows/python-bandit.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/5631f62f6dcd3a34d7ae/maintainability)](https://codeclimate.com/github/febus982/mkdocs-macros-adr-summary/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5631f62f6dcd3a34d7ae/test_coverage)](https://codeclimate.com/github/febus982/mkdocs-macros-adr-summary/test_coverage)
 
