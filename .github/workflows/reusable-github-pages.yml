@@ -16,10 +16,6 @@ on:
         required: false
         type: boolean
         default: false
-      delete-before-deploy:
-        required: false
-        type: boolean
-        default: false
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -63,12 +59,6 @@ jobs:
       - name: Make sure previous versions are available to mike
         run: |
           git fetch origin gh-pages --depth=1
-
-      - name: Delete existing version
-        if: ${{ inputs.delete-before-deploy }}
-        continue-on-error: true
-        run: |
-          mike delete ${{ inputs.site-version }} --branch ${{ inputs.branch }}
 
       - name: Build and deploy static pages
         run: |
