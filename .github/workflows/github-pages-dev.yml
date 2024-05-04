@@ -14,3 +14,4 @@ jobs:
     uses: ./.github/workflows/reusable-github-pages.yml
     with:
       site-version: "dev"
+      delete-before-deploy: true
