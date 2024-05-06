@@ -1,5 +1,6 @@
 from datetime import datetime
 from pathlib import Path
+from typing import Optional
 
 import pytest
 
@@ -7,14 +8,16 @@ from mkdocs_macros_adr_summary.parser import NygardParser
 
 
 @pytest.mark.parametrize(
-    ["filename", "expected_statuses"],
+    ["filename", "expected_id", "expected_statuses"],
     [
         (
-            "valid.md",
+            "0001-valid.md",
+            1,
             ("Accepted",),
         ),
         (
             "valid_multi_status.md",
+            None,
             (
                 "Accepted",
                 "Supercedes [1. Record architecture decisions]"
@@ -24,7 +27,10 @@ from mkdocs_macros_adr_summary.parser import NygardParser
     ],
 )
 def test_parse_valid_document(
-    filename: str, expected_statuses: tuple, adr_document_factory
+    filename: str,
+    expected_statuses: tuple,
+    expected_id: Optional[int],
+    adr_document_factory,
 ) -> None:
     doc = NygardParser.parse(
         Path(__file__).parent.joinpath(f"adr_docs/nygard/{filename}"),
@@ -36,6 +42,7 @@ def test_parse_valid_document(
         date=datetime.fromisoformat("2024-01-20").date(),
         status=expected_statuses[-1],
         statuses=expected_statuses,
+        document_id=expected_id,
     )
     assert doc == doc2
 

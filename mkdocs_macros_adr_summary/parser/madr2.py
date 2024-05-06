@@ -95,7 +95,3 @@ class MADR2Parser(BaseParser):
     @classmethod
     def _get_deciders(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
         return metadata.get("deciders")
-
-    @classmethod
-    def _get_id(cls, metadata: dict, ast: TYPE_AST) -> Optional[int]:
-        return None

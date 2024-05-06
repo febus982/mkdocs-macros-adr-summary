@@ -11,8 +11,9 @@ from mkdocs_macros_adr_summary.parser.madr2 import MADR2Parser
     ["filename", "expected_metadata"],
     [
         (
-            "valid_with_metadata.md",
+            "0001-valid_with_metadata.md",
             {
+                "document_id": 1,
                 "status": "Accepted",
                 "statuses": tuple(["Accepted"]),
                 "date": datetime.fromisoformat("2024-01-24").date(),
@@ -22,8 +23,9 @@ from mkdocs_macros_adr_summary.parser.madr2 import MADR2Parser
             },
         ),
         (
-            "valid_without_metadata.md",
+            "valid_without_metadata_and_id.md",
             {
+                "document_id": None,
                 "status": None,
                 "statuses": tuple(),
                 "date": None,
