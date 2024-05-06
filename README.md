@@ -14,6 +14,12 @@
 
 This is a macro plugin to generates summaries from a list of a ADR documents in a directory.
 
+The single ADR documents file names have to respect this format: `0000-my-decision-title.md`
+
+* start with 4 digits followed by the character `-`
+* the rest of the file name can contain only letters, numbers, dashes and underscores (`[A-Za-z0-9_-]` regex)
+* end with the `.md` extension
+
 Examples and documentation can be found [here](https://febus982.github.io/mkdocs-macros-adr-summary)
 
 The package should be stable enough for daily use. I'll release 1.0.0, and switch to semantic version,
@@ -64,6 +70,7 @@ The `documents` variable in the jinja template is a Sequence of `ADRDocument` mo
 @dataclass
 class ADRDocument:
     file_path: str
+    document_id: Optional[int] = None
     title: Optional[str] = None
     date: Optional[date] = None
     status: Optional[str] = None
@@ -100,8 +107,7 @@ There are some differences in what metadata is available when using different fo
 The supported ADR formats are:
 * `nygard` format, it is recommended to use [adr-tools](https://github.com/npryce/adr-tools) to manage the directory
 * `MADR` [version 3](https://github.com/adr/madr/blob/3.0.0/template/adr-template.md)
-
-Support for [MADR](https://adr.github.io/madr/) version 2 will be added in a future version.
+* `MADR` [version 2](https://github.com/adr/madr/blob/2.1.2/template/template.md)
 
 ## Commands for development
 

@@ -52,7 +52,7 @@ class BaseParser(ADRParser, ABC):
 
         doc = ADRDocument(
             file_path=fix_url(str(file_path.relative_to(base_path))),
-            document_id=cls._get_id(metadata, ast),
+            document_id=cls._get_id(file_path),
             title=cls._get_title(metadata, ast),
             date=cls._get_date(metadata, ast),
             status=cls._get_status(metadata, ast),
@@ -113,8 +113,11 @@ class BaseParser(ADRParser, ABC):
     def _get_metadata_and_ast(cls, file: str) -> Tuple[Dict[str, Any], TYPE_AST]: ...
 
     @classmethod
-    @abstractmethod
-    def _get_id(cls, metadata: dict, ast: TYPE_AST) -> Optional[int]: ...
+    def _get_id(cls, file_path: Path) -> Optional[int]:
+        try:
+            return int(file_path.parts[-1][0:4])
+        except ValueError:
+            return None
 
     @classmethod
     def _get_deciders(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:

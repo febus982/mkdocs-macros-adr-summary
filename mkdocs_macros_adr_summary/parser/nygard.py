@@ -85,7 +85,3 @@ class NygardParser(BaseParser):
     def _get_status(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
         statuses = cls._get_statuses(metadata, ast)
         return statuses[-1] if statuses else None
-
-    @classmethod
-    def _get_id(cls, metadata: dict, ast: TYPE_AST) -> Optional[int]:
-        return None
