@@ -51,7 +51,7 @@ build-backend = "poetry_dynamic_versioning.backend"
 mistune = "^3.0.2"
 mkdocs = "^1.4.3"
 mkdocs-macros-plugin = "^1.0.5"
-python = ">=3.8,<3.13"
+python = ">=3.13,<3.14"
 pyyaml = "^6.0.1"
 
 [tool.poetry.group.dev]
