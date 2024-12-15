@@ -30,5 +30,5 @@ def define_env(env: MacrosPlugin) -> None:
     env.macro(partial(adr_summary, env), "adr_summary")
 
 
-__version__ = "0.0.0"
-__version_tuple__ = (0, 0, 0)
+__version__ = "1.0.0.post2.dev0+05d8736"
+__version_tuple__ = (1, 0, 0, "post2", "dev0", "05d8736")

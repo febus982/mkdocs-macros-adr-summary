@@ -12,20 +12,23 @@ def test_adr_summary():
     fake_parser = Mock()
     fake_parser.parse.return_value = "someprocessedfile.md"
 
-    with patch(
-        "mkdocs_macros_adr_summary.plugin.get_parser", return_value=fake_parser
-    ), patch(
-        "mkdocs_macros_adr_summary.plugin.Jinja2Renderer.summary",
-        return_value="TEST RETURN",
-    ) as mock_summary, patch(
-        "os.listdir",
-        return_value=[
-            "somefile.md",
-            "0001-somevalidfile.md",
-            r"0001-someoth\erfile.md",
-            "0001-someoth/erfile.md",
-        ],
-    ) as mock_listdir, patch("os.path.isfile", return_value=True):
+    with (
+        patch("mkdocs_macros_adr_summary.plugin.get_parser", return_value=fake_parser),
+        patch(
+            "mkdocs_macros_adr_summary.plugin.Jinja2Renderer.summary",
+            return_value="TEST RETURN",
+        ) as mock_summary,
+        patch(
+            "os.listdir",
+            return_value=[
+                "somefile.md",
+                "0001-somevalidfile.md",
+                r"0001-someoth\erfile.md",
+                "0001-someoth/erfile.md",
+            ],
+        ) as mock_listdir,
+        patch("os.path.isfile", return_value=True),
+    ):
         summary = adr_summary(env=mkdocs_env, adr_path="docs/adr", adr_style="nygard")
 
     mock_listdir.assert_called_once_with(PosixPath("/some/path/to/docs/adr"))

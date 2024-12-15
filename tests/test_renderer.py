@@ -35,12 +35,15 @@ def test_jinja_renderer_uses_default_template_if_no_template_file(
     template.render.return_value = "SOME RETURN VALUE"
     env.get_template.return_value = template
 
-    with patch(
-        "mkdocs_macros_adr_summary.renderer.FileSystemLoader",
-        return_value=loader,
-    ) as mock_loader, patch(
-        "mkdocs_macros_adr_summary.renderer.Environment", return_value=env
-    ) as mock_env:
+    with (
+        patch(
+            "mkdocs_macros_adr_summary.renderer.FileSystemLoader",
+            return_value=loader,
+        ) as mock_loader,
+        patch(
+            "mkdocs_macros_adr_summary.renderer.Environment", return_value=env
+        ) as mock_env,
+    ):
         Jinja2Renderer.summary(
             documents=[
                 ADRDocument(
