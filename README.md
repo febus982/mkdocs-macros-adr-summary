@@ -1,5 +1,5 @@
 # mkdocs-macros-adr-summary
-![Static Badge](https://img.shields.io/badge/Python-3.8_%7C_3.9_%7C_3.10_%7C_3.11_%7C_3.12-blue?logo=python&logoColor=white)
+![Static Badge](https://img.shields.io/badge/Python-3.9_%7C_3.10_%7C_3.11_%7C_3.12_%7C_3.13-blue?logo=python&logoColor=white)
 [![Stable Version](https://img.shields.io/pypi/v/mkdocs-macros-adr-summary?color=blue)](https://pypi.org/project/mkdocs-macros-adr-summary/)
 [![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#beta)
 
