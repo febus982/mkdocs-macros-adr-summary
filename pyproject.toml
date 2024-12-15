@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-macros-adr-summary"
-version = "1.0.0.post2.dev0+05d8736"
+version = "0.0.0"
 description = "A plugin to generate a summary of a ADR directory"
 license = "MIT"
 authors = ["Federico Busetti <729029+febus982@users.noreply.github.com>"]
@@ -41,7 +41,7 @@ classifiers = [
 ]
 
 [tool.poetry-dynamic-versioning]
-enable = false
+enable = true
 
 [build-system]
 requires = ["poetry-core", "poetry-dynamic-versioning"]
