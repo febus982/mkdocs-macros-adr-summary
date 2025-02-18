@@ -48,7 +48,7 @@ requires = ["poetry-core", "poetry-dynamic-versioning"]
 build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poetry.dependencies]
-mistune = "^3.0.2"
+mistune = ">=3.0.2, <3.1"
 mkdocs = "^1.4.3"
 mkdocs-macros-plugin = "^1.0.5"
 python = ">=3.9,<3.14"
