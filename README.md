@@ -114,7 +114,6 @@ The supported ADR formats are:
 All the common commands used during development can be run using make targets:
 
 * `make dev-dependencies`: Install dev requirements
-* `make update-dependencies`: Update dev requirements
 * `make test`: Run test suite
 * `make check`: Run tests, code style and lint checks
 * `make fix`: Run code style and lint automatic fixes (where possible)
