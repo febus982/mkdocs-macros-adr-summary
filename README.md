@@ -4,8 +4,8 @@
 [![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#beta)
 
 [![Python tests](https://github.com/febus982/mkdocs-macros-adr-summary/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/febus982/mkdocs-macros-adr-summary/actions/workflows/python-tests.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/5631f62f6dcd3a34d7ae/maintainability)](https://codeclimate.com/github/febus982/mkdocs-macros-adr-summary/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/5631f62f6dcd3a34d7ae/test_coverage)](https://codeclimate.com/github/febus982/mkdocs-macros-adr-summary/test_coverage)
+[![Maintainability](https://qlty.sh/badges/48b1b6a4-94d2-48d4-aced-3c93c183c9c3/maintainability.svg)](https://qlty.sh/gh/febus982/projects/mkdocs-macros-adr-summary)
+[![Code Coverage](https://qlty.sh/badges/48b1b6a4-94d2-48d4-aced-3c93c183c9c3/test_coverage.svg)](https://qlty.sh/gh/febus982/projects/mkdocs-macros-adr-summary)
 
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
