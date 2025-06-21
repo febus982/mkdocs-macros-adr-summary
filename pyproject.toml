@@ -1,6 +1,6 @@
 [project]
 name = "mkdocs-macros-adr-summary"
-version = "0.0.0"
+dynamic = ["version"]
 description = "A plugin to generate a summary of a ADR directory"
 authors = [{ name = "Federico Busetti", email = "729029+febus982@users.noreply.github.com" }]
 requires-python = ">=3.9,<3.14"
