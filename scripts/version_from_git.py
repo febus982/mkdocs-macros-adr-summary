@@ -1,4 +1,4 @@
-#  Copyright (c) 2024 Federico Busetti <729029+febus982@users.noreply.github.com>
+#  Copyright (c) 2025 Federico Busetti <729029+febus982@users.noreply.github.com>
 #
 #  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
@@ -17,14 +17,7 @@
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
+from dunamai import Version
 
-from functools import partial
-
-from mkdocs_macros.plugin import MacrosPlugin
-
-from .plugin import adr_summary
-
-
-def define_env(env: MacrosPlugin) -> None:
-    # We could use the decorator here, but it would be more complex to test
-    env.macro(partial(adr_summary, env), "adr_summary")
+version = Version.from_git().serialize()
+print(version)
