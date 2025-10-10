@@ -44,7 +44,7 @@ the path containing your ADR files relative to the `mkdocs.yml` file.
 {{ adr_summary(adr_path="docs/adr", adr_style="nygard") }}
 ```
 
-`adr_style` can be `nygard` or `MADR3`
+`adr_style` can be `nygard`, `MADR2`, `MADR3`, or `MADR4`
 
 ## More customization
 
@@ -82,30 +82,32 @@ class ADRDocument:
 
 There are some differences in what metadata is available when using different formats:
 
-|           | Nygard | MADR3 | MADR2 |
-|-----------|--------|-------|-------|
-| file_path | ✅︎     | ✅︎    | ✅︎    |
-| title     | ✅︎     | ✅︎    | ✅︎    |
-| date      | ✅︎     | ✅︎    | ✅︎    |
-| status    | ⚠      | ✅︎    | ✅︎    |
-| statuses  | ✅︎     | ⚠     | ⚠     |
-| deciders  | ❌      | ✅︎    | ✅︎    |
-| consulted | ❌      | ✅︎    | ❌     |
-| informed  | ❌      | ✅︎    | ❌     |
+|           | Nygard | MADR4 | MADR3 | MADR2 |
+|-----------|--------|-------|-------|-------|
+| file_path | ✅︎     | ✅︎    | ✅︎    | ✅︎    |
+| title     | ✅︎     | ✅︎    | ✅︎    | ✅︎    |
+| date      | ✅︎     | ✅︎    | ✅︎    | ✅︎    |
+| status    | ⚠      | ✅︎    | ✅︎    | ✅︎    |
+| statuses  | ✅︎     | ⚠     | ⚠     | ⚠     |
+| deciders  | ❌      | ✅︎    | ✅︎    | ✅︎    |
+| consulted | ❌      | ✅︎    | ✅︎    | ❌     |
+| informed  | ❌      | ✅︎    | ✅︎    | ❌     |
 
 * **Nygard format**
     * `status` is the last item `statuses`. (I don't believe we should use multiple
       statuses, however `adr-tools` allows it)
     * `deciders`, `consulted` and `informed` are not supported by the format
-* **MADR2** and **MADR3**
+* **MADR2**, **MADR3**, and **MADR4**
     * I wasn't able to find an automated tool supporting superseding documents.
       By looking at the template it looks like there's a single status.
       `statuses` will return a list with a single status.
+    * MADR4 uses `decision-makers` instead of `deciders` in the YAML frontmatter, but the parser maps it to the `deciders` field in the document model
 
 ## Supported ADR formats
 
 The supported ADR formats are:
 * `nygard` format, it is recommended to use [adr-tools](https://github.com/npryce/adr-tools) to manage the directory
+* `MADR` [version 4](https://github.com/adr/madr/blob/4.0.0/template/adr-template.md)
 * `MADR` [version 3](https://github.com/adr/madr/blob/3.0.0/template/adr-template.md)
 * `MADR` [version 2](https://github.com/adr/madr/blob/2.1.2/template/template.md)
 

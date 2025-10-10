@@ -18,29 +18,13 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 
-from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from datetime import date
-from pathlib import Path
-from typing import Literal, Optional, Sequence
+from typing import Optional
 
-TYPE_ADRStyle = Literal["MADR2", "MADR3", "MADR4", "nygard"]
+from .madr3 import MADR3Parser
+from .types import TYPE_AST
 
 
-@dataclass
-class ADRDocument:
-    file_path: str
-    document_id: Optional[int] = None
-    title: Optional[str] = None
-    date: Optional[date] = None
-    status: Optional[str] = None
-    statuses: Sequence[str] = tuple()
-    deciders: Optional[str] = None
-    consulted: Optional[str] = None
-    informed: Optional[str] = None
-
-
-class ADRParser(ABC):
-    @staticmethod
-    @abstractmethod
-    def parse(file_path: Path, base_path: Path) -> ADRDocument: ...
+class MADR4Parser(MADR3Parser):
+    @classmethod
+    def _get_deciders(cls, metadata: dict, ast: TYPE_AST) -> Optional[str]:
+        return metadata.get("decision-makers")

@@ -29,4 +29,5 @@
 #
 from .madr2 import MADR2Parser
 from .madr3 import MADR3Parser
+from .madr4 import MADR4Parser
 from .nygard import NygardParser

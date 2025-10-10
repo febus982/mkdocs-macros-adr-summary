@@ -1,0 +1,77 @@
+from datetime import datetime
+from pathlib import Path
+
+import pytest
+
+from mkdocs_macros_adr_summary.parser.exceptions import InvalidFileError
+from mkdocs_macros_adr_summary.parser.madr4 import MADR4Parser
+
+
+@pytest.mark.parametrize(
+    ["filename", "expected_metadata"],
+    [
+        (
+            "0001-valid_with_metadata.md",
+            {
+                "document_id": 1,
+                "status": "Accepted",
+                "statuses": tuple(["Accepted"]),
+                "date": datetime.fromisoformat("2024-01-20").date(),
+                "deciders": "Nick Fury",
+                "consulted": "Anthony Stark",
+                "informed": "Thor Odinson",
+            },
+        ),
+        (
+            "valid_without_metadata_and_id.md",
+            {
+                "document_id": None,
+                "status": None,
+                "statuses": tuple(),
+                "date": None,
+                "deciders": None,
+                "consulted": None,
+                "informed": None,
+            },
+        ),
+    ],
+)
+def test_parse_valid_document(
+    filename: str, expected_metadata: dict, adr_document_factory
+):
+    assert MADR4Parser.parse(
+        Path(__file__).parent.joinpath(f"adr_docs/madr4/{filename}"),
+        base_path=Path(__file__).parent,
+    ) == adr_document_factory(
+        file_path=f"../adr_docs/madr4/{filename}",
+        title="Use Markdown Any Decision Records",
+        **expected_metadata,
+    )
+
+
+def test_parse_invalid_blank_document():
+    with pytest.raises(InvalidFileError):
+        MADR4Parser.parse(
+            Path(__file__).parent.joinpath("adr_docs/madr4/invalid_blank_document.md"),
+            base_path=Path(__file__).parent,
+        )
+
+
+@pytest.mark.parametrize(
+    ["filename"],
+    [("invalid_title_h3.md",), ("invalid_title_p.md",)],
+)
+def test_parse_invalid_title(filename: str, adr_document_factory):
+    document = MADR4Parser.parse(
+        Path(__file__).parent.joinpath(f"adr_docs/madr4/{filename}"),
+        base_path=Path(__file__).parent,
+    )
+    assert document.title == adr_document_factory().title
+
+
+def test_parse_invalid_headers():
+    with pytest.raises(InvalidFileError):
+        MADR4Parser.parse(
+            Path(__file__).parent.joinpath("adr_docs/madr4/invalid_headers.md"),
+            base_path=Path(__file__).parent,
+        )
