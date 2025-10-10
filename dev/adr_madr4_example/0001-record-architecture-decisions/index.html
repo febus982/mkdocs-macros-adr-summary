@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../summary/">
+        <link rel="prev" href="../../adr_madr3_example/summary/">
       
       
-        <link rel="next" href="../0002-changed-mind/">
+        <link rel="next" href="../0002-change-mind/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -442,20 +442,20 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -471,7 +471,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             ADR Example (MADR2 format)
@@ -485,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../summary/" class="md-nav__link">
+      <a href="../../adr_madr2_example/summary/" class="md-nav__link">
         
   
   
@@ -505,32 +505,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Use Markdown Any Decision Records
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../adr_madr2_example/0001-record-architecture-decisions/" class="md-nav__link">
         
   
   
@@ -541,53 +519,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#context-and-problem-statement" class="md-nav__link">
-    <span class="md-ellipsis">
-      Context and Problem Statement
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#considered-options" class="md-nav__link">
-    <span class="md-ellipsis">
-      Considered Options
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#decision-outcome" class="md-nav__link">
-    <span class="md-ellipsis">
-      Decision Outcome
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -600,7 +531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0002-changed-mind/" class="md-nav__link">
+      <a href="../../adr_madr2_example/0002-changed-mind/" class="md-nav__link">
         
   
   
@@ -826,31 +757,26 @@
 
 
 <h1 id="use-markdown-any-decision-records">Use Markdown Any Decision Records</h1>
-<ul>
-<li>Status: superseded by <a href="../0002-changed-mind/">ADR-0002</a></li>
-<li>Deciders: list everyone involved in the decision</li>
-<li>Date: 2024-01-24</li>
-</ul>
 <h2 id="context-and-problem-statement">Context and Problem Statement</h2>
 <p>We want to record any decisions made in this project independent whether decisions concern the architecture ("architectural decision record"), the code, or other fields.
 Which format and structure should these records follow?</p>
 <h2 id="considered-options">Considered Options</h2>
 <ul>
-<li><a href="https://adr.github.io/madr/">MADR</a> 2.1.2 – The Markdown Any Decision Records</li>
+<li><a href="https://adr.github.io/madr/">MADR</a> 4.0.0 – The Markdown Any Decision Records</li>
 <li><a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">Michael Nygard's template</a> – The first incarnation of the term "ADR"</li>
 <li>Other templates listed at <a href="https://schubmat.github.io/DecisionCapture">https://schubmat.github.io/DecisionCapture</a></li>
 <li>Formless – No conventions for file format and structure</li>
 </ul>
 <h2 id="decision-outcome">Decision Outcome</h2>
-<p>Chosen option: "MADR 2.1.2", because</p>
+<p>Chosen option: "MADR 4.0.0", because</p>
 <ul>
 <li>Implicit assumptions should be made explicit.
   Design documentation is important to enable people understanding the decisions later on.
   See also <a href="https://doi.org/10.1109/TSE.1986.6312940">A rational design process: How and why to fake it</a>.</li>
+<li>MADR allows for structured capturing of any decision.</li>
 <li>The MADR format is lean and fits our development style.</li>
 <li>The MADR structure is comprehensible and facilitates usage &amp; maintenance.</li>
 <li>The MADR project is vivid.</li>
-<li>Version 2.1.2 is the latest one available when starting to document ADRs.</li>
 </ul>
 
 
@@ -858,6 +784,9 @@ Which format and structure should these records follow?</p>
 
 
 
+
+  
+  
 
 
 
