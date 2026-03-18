@@ -52,12 +52,12 @@ The page output is generated using a jinja template, but you can provide a custo
 must still be relative to the `mkdocs.yml` file.
 
 ```markdown
-{{ adr_summary(adr_path="docs/adr", adr_style="MADR3",m) }}
+{{ adr_summary(adr_path="docs/adr", adr_style="MADR3", template="templates/adr-summary.jinja") }}
 ```
 
 The default template is:
 
-```markdown
+```markdown title="templates/adr-summary.jinja"
 | ID | Date | Decision | Status |
 |----|------|----------|--------|
 {% for d in documents %}| {{ d.document_id }} | {{ d.date.strftime('%d-%m-%Y') if d.date else "-"}} | [{{ d.title }}]({{ d.file_path }}) | {{ d.status }}  |
