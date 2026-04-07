@@ -57,7 +57,7 @@ dev = [
     "mike",
     "mypy",
     "pymdown-extensions",
-    "pytest<8.4.0",
+    "pytest<9.0.4",
     "pytest-cov",
     "pytest-factoryboy",
     "pytest-xdist",
